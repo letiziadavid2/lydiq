@@ -17,6 +17,24 @@
 .modal{position:fixed;inset:0;background:rgba(10,14,25,.56);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.modal-card{background:#fff;max-width:650px;width:100%;border-radius:24px;padding:26px;position:relative;max-height:90vh;overflow:auto}.close{position:absolute;right:16px;top:14px;background:#f0f2f6;border:0;border-radius:10px;padding:8px;cursor:pointer}.success{display:none}.success.show{display:block}.notice{background:#f7f5ff;border:1px solid #e4ddff;border-radius:14px;padding:12px;font-size:12px;color:#4f4778;margin-bottom:12px}
 @media(max-width:900px){.hero-grid,.demo{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.score{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.actions{grid-template-columns:1fr}.bigband,.footer-inner{flex-direction:column;align-items:flex-start}nav{display:none}}
 @media(max-width:560px){h1{font-size:54px}.section h2{font-size:38px}.metrics,.input-grid{grid-template-columns:1fr}.hero{padding-top:30px}}
+
+.report-panel{margin-top:16px;background:linear-gradient(135deg,#101421 0%,#1b1b32 100%);color:#fff;border-radius:24px;padding:24px;box-shadow:0 18px 55px rgba(16,20,33,.18)}
+.report-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:14px}
+.report-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:16px}
+.report-eyebrow{font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#bfc5d5}
+.report-title{font-size:28px;line-height:1.05;letter-spacing:-.04em;margin:8px 0 5px}
+.report-text{color:#d5d9e4;font-size:13px;line-height:1.55;margin:0}
+.report-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.report-stat{background:#fff;color:#0c1020;border-radius:16px;padding:13px}
+.report-stat small{display:block;color:#687086;font-size:10px;font-weight:850}
+.report-stat strong{display:block;font-size:19px;margin-top:4px}
+.report-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.report-actions button{border:0;border-radius:12px;padding:12px 14px;font-weight:900;cursor:pointer}
+.report-primary{background:#fff;color:#0c1020}
+.report-secondary{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.18)!important}
+.report-note{margin-top:11px;color:#aeb5c6;font-size:11px}
+@media(max-width:700px){.report-grid,.report-stat-grid{grid-template-columns:1fr}}
+
 </style>
 <style>
 :root{--bg:#f4f6fb;--paper:#fff;--ink:#0c1020;--muted:#687086;--line:#e4e8f1;--purple:#7657ff;--mint:#20c9a2;--red:#ff5d73;--amber:#ffb648;--shadow:0 24px 70px rgba(22,28,52,.10)}
@@ -59,6 +77,35 @@ footer{padding:25px 0 45px;color:var(--muted);font-size:12px}.footer-inner{displ
 <div class="card scenario-card"><strong>Scenario B · Growth plan</strong><div class="delta"><label>Revenue growth</label><input id="health_simGrowth" max="30" min="-10" type="range" value="15"/></div><div style="font-size:12px;font-weight:800"><span id="health_simGrowthVal">+15</span>%</div><div class="impact"><div><small>Revenue uplift</small><strong id="health_growthUplift">€450k</strong></div><div><small>Liquidity effect</small><strong id="health_growthImpact">Mixed</strong></div><div><small>Risk</small><strong id="health_growthRisk">Moderate</strong></div></div><div class="explain" id="health_growthExplain">Growth can improve economics, but the cash outcome depends on margin and working-capital discipline.</div></div>
 </div><div class="card" style="margin-top:16px"><strong>Recommended next move</strong><div class="action" id="health_actions"><span>Review receivables ageing</span><span>Test collection improvements</span><span>Stress-test financing need</span></div></div></div>
 </section>
+
+<div class="panel report-panel" id="report">
+  <div class="report-eyebrow">LYDIQ REPORT</div>
+  <div class="report-grid">
+    <div>
+      <div class="report-title" id="reportHeadline">Financial pressure is manageable.</div>
+      <p class="report-text" id="reportNarrative">LYDIQ has generated an indicative operating assessment from the current inputs.</p>
+      <div class="report-stat-grid">
+        <div class="report-stat"><small>Resilience</small><strong id="reportScore">86 / 100</strong></div>
+        <div class="report-stat"><small>Cash runway</small><strong id="reportRunway">7.6 wks</strong></div>
+        <div class="report-stat"><small>Debt / EBITDA</small><strong id="reportLeverage">1.7×</strong></div>
+      </div>
+    </div>
+    <div class="report-card">
+      <div class="report-eyebrow">WHAT TO WATCH</div>
+      <div class="report-title" style="font-size:22px" id="reportDriver">Liquidity headroom</div>
+      <p class="report-text" id="reportDriverText">Monitor cash conversion and customer payment behaviour.</p>
+      <div class="report-eyebrow" style="margin-top:16px">NEXT ACTIONS</div>
+      <p class="report-text" style="margin-top:7px" id="reportActionsText">Review receivables ageing · monitor leverage · test the next major decision</p>
+    </div>
+  </div>
+  <div class="report-actions">
+    <button class="report-primary" id="downloadReport">Download report</button>
+    <button class="report-secondary" id="copyReport">Copy summary</button>
+    <button class="report-secondary" id="printReport">Print / Save as PDF</button>
+  </div>
+  <div class="report-note">Prototype output only. Figures are indicative and should be reviewed with qualified financial professionals.</div>
+</div>
+
 </main></main>
 <footer class="footer"><div class="wrap footer-inner"><div><strong>LYDIQ</strong> · Financial intelligence for SMEs</div><div>Prototype · No financial advice · Data stays in-browser</div></div></footer>
 <div class="modal" id="modal"><div class="modal-card"><button class="close" onclick="closeModal()">✕</button><div id="formBlock"><div class="eyebrow">Pilot application</div><h2 style="font-size:36px;letter-spacing:-.05em;margin:14px 0 8px">Help shape LYDIQ.</h2><p style="color:var(--muted)">This form is a prototype and stores nothing on a server. Use it to prepare your pilot outreach.</p><div class="notice">For the first pilot, we are most interested in SME owners, CFOs/controllers, accountants and advisors.</div><div class="field"><label>Name</label><input class="fieldInput" id="pname" placeholder="Your name"/></div><div class="field"><label>Role</label><input class="fieldInput" id="prole" placeholder="Founder, CFO, accountant…"/></div><div class="field"><label>Why would this be useful?</label><textarea class="fieldInput" id="pwhy" placeholder="What financial decision or problem would you use LYDIQ for?" rows="4"></textarea></div><button class="btn btn-primary" onclick="submitPilot()">Prepare pilot response →</button></div><div class="success" id="success"><div class="eyebrow">Ready</div><h2 style="font-size:36px;letter-spacing:-.05em">Pilot response prepared.</h2><p style="color:var(--muted)">Copy the text below and send it by email or LinkedIn to start the conversation.</p><textarea id="pilotText" rows="11" style="width:100%;border:1px solid var(--line);border-radius:14px;padding:12px;font:inherit"></textarea><div style="display:flex;gap:10px;margin-top:12px"><button class="btn btn-primary" onclick="navigator.clipboard.writeText(document.getElementById('pilotText').value)">Copy</button><button class="btn btn-light" onclick="closeModal()">Close</button></div></div></div></div>
@@ -246,4 +293,81 @@ calculate();
   const input=document.getElementById('health_fileInput');
   if(input) input.addEventListener('change',e=>{const f=e.target.files?.[0]; if(f) handleFile(f);});
 })();
-</script></script></body></html>
+</script></script>
+<script>
+function getLYDIQReportData(){
+  const rev=+document.getElementById('health_rev').value||0;
+  const ebitda=+document.getElementById('health_ebitda').value||0;
+  const cash=+document.getElementById('health_cash').value||0;
+  const debt=+document.getElementById('health_debt').value||0;
+  const dso=+document.getElementById('health_dso').value||0;
+  const growth=+document.getElementById('health_growth').value||0;
+  const score=+(document.getElementById('health_score').textContent||0);
+  const runway=document.getElementById('health_runway').textContent;
+  const leverage=document.getElementById('health_levOut').textContent;
+  const narrative=document.getElementById('health_insightText').textContent;
+  let driver='Liquidity headroom';
+  let driverText='Monitor cash conversion and customer payment behaviour.';
+  if(dso>=75){driver='Working capital pressure';driverText='Customer payment timing is absorbing more cash and should be actively managed.';}
+  else if(ebitda>0 && debt/ebitda>=3){driver='Leverage pressure';driverText='Debt capacity is becoming a key constraint; test financing needs against downside scenarios.';}
+  else if(parseFloat(runway)<8){driver='Liquidity headroom';driverText='The cash buffer is relatively short versus the operating burn proxy.';}
+  else if(growth<0){driver='Contraction risk';driverText='A declining growth assumption increases the importance of cash preservation and cost flexibility.';}
+  return {rev,ebitda,cash,debt,dso,growth,score,runway,leverage,narrative,driver,driverText};
+}
+function refreshLYDIQReport(){
+  const d=getLYDIQReportData();
+  document.getElementById('reportScore').textContent=d.score+' / 100';
+  document.getElementById('reportRunway').textContent=d.runway;
+  document.getElementById('reportLeverage').textContent=d.leverage;
+  document.getElementById('reportHeadline').textContent=d.score>=80?'Financial pressure is manageable.':d.score>=60?'Financial pressure is building.':'Financial pressure needs attention.';
+  document.getElementById('reportNarrative').textContent=d.narrative;
+  document.getElementById('reportDriver').textContent=d.driver;
+  document.getElementById('reportDriverText').textContent=d.driverText;
+  document.getElementById('reportActionsText').textContent=
+    d.dso>=75?'Review receivables ageing · accelerate collections · stress-test cash needs':
+    d.score<60?'Protect liquidity · review fixed costs · stress-test financing needs':
+    'Review receivables ageing · monitor leverage · test the next major decision';
+}
+function buildLYDIQReportHTML(){
+  const d=getLYDIQReportData();
+  const eur=n=>new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+  const actions=d.dso>=75?'Review receivables ageing · accelerate collections · stress-test cash needs':
+    d.score<60?'Protect liquidity · review fixed costs · stress-test financing needs':
+    'Review receivables ageing · monitor leverage · test the next major decision';
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>LYDIQ Financial Report</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f4f6fb;color:#0c1020;margin:0;padding:40px}.wrap{max-width:880px;margin:auto}
+.card{background:#fff;border:1px solid #e4e8f1;border-radius:22px;padding:26px;margin-bottom:16px}
+h1{font-size:38px;letter-spacing:-.04em;margin:0 0 8px}h2{font-size:18px;margin:0 0 8px}.muted{color:#687086}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{border:1px solid #e4e8f1;border-radius:14px;padding:14px}.stat small{display:block;color:#687086}.stat strong{font-size:22px;display:block;margin-top:5px}
+.badge{display:inline-block;padding:7px 10px;border-radius:999px;background:#eeeaff;color:#7657ff;font-weight:800;font-size:12px}.note{font-size:12px;color:#687086}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<div class="card"><span class="badge">LYDIQ · FINANCIAL EARLY WARNING</span><h1>${d.score>=80?'Financial pressure is manageable.':d.score>=60?'Financial pressure is building.':'Financial pressure needs attention.'}</h1><p class="muted">${d.narrative}</p></div>
+<div class="card"><h2>Current snapshot</h2><div class="grid">
+<div class="stat"><small>Revenue</small><strong>${eur(d.rev)}</strong></div><div class="stat"><small>EBITDA</small><strong>${eur(d.ebitda)}</strong></div><div class="stat"><small>Cash</small><strong>${eur(d.cash)}</strong></div>
+<div class="stat"><small>Debt</small><strong>${eur(d.debt)}</strong></div><div class="stat"><small>DSO</small><strong>${d.dso} days</strong></div><div class="stat"><small>Revenue growth</small><strong>${d.growth>=0?'+':''}${d.growth}%</strong></div>
+<div class="stat"><small>Resilience</small><strong>${d.score}/100</strong></div><div class="stat"><small>Cash runway</small><strong>${d.runway}</strong></div><div class="stat"><small>Debt / EBITDA</small><strong>${d.leverage}</strong></div>
+</div></div>
+<div class="card"><h2>Main driver</h2><p><strong>${d.driver}</strong></p><p class="muted">${d.driverText}</p></div>
+<div class="card"><h2>Recommended next actions</h2><p>${actions.replaceAll(' · ',' ·<br>')}</p></div>
+<div class="card"><p class="note">Prototype output only. This report is based on the current browser inputs and indicative prototype logic; it is not financial advice.</p></div>
+</div></body></html>`;
+}
+document.getElementById('downloadReport')?.addEventListener('click',()=>{
+  refreshLYDIQReport();
+  const blob=new Blob([buildLYDIQReportHTML()],{type:'text/html;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='LYDIQ_Financial_Report.html';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+document.getElementById('copyReport')?.addEventListener('click',async()=>{
+  const d=getLYDIQReportData();
+  const text=`LYDIQ Financial Report\nResilience: ${d.score}/100\nCash runway: ${d.runway}\nDSO: ${d.dso} days\nDebt / EBITDA: ${d.leverage}\n\nMain driver: ${d.driver}\n${d.driverText}\n\nWhat LYDIQ sees: ${d.narrative}`;
+  try{await navigator.clipboard.writeText(text);const b=document.getElementById('copyReport');const old=b.textContent;b.textContent='Copied ✓';setTimeout(()=>b.textContent=old,1200);}catch(e){alert(text);}
+});
+document.getElementById('printReport')?.addEventListener('click',()=>{refreshLYDIQReport();window.print();});
+refreshLYDIQReport();
+</script>
+
+</body></html>
