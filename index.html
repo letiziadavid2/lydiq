@@ -78,35 +78,7 @@ footer{padding:25px 0 45px;color:var(--muted);font-size:12px}.footer-inner{displ
 </div><div class="card" style="margin-top:16px"><strong>Recommended next move</strong><div class="action" id="health_actions"><span>Review receivables ageing</span><span>Test collection improvements</span><span>Stress-test financing need</span></div></div></div>
 </section>
 
-<div class="panel report-panel" id="report">
-  <div class="report-eyebrow">LYDIQ REPORT</div>
-  <div class="report-grid">
-    <div>
-      <div class="report-title" id="reportHeadline">Financial pressure is manageable.</div>
-      <p class="report-text" id="reportNarrative">LYDIQ has generated an indicative operating assessment from the current inputs.</p>
-      <div class="report-stat-grid">
-        <div class="report-stat"><small>Resilience</small><strong id="reportScore">86 / 100</strong></div>
-        <div class="report-stat"><small>Cash runway</small><strong id="reportRunway">7.6 wks</strong></div>
-        <div class="report-stat"><small>Debt / EBITDA</small><strong id="reportLeverage">1.7×</strong></div>
-      </div>
-    </div>
-    <div class="report-card">
-      <div class="report-eyebrow">WHAT TO WATCH</div>
-      <div class="report-title" style="font-size:22px" id="reportDriver">Liquidity headroom</div>
-      <p class="report-text" id="reportDriverText">Monitor cash conversion and customer payment behaviour.</p>
-      <div class="report-eyebrow" style="margin-top:16px">NEXT ACTIONS</div>
-      <p class="report-text" style="margin-top:7px" id="reportActionsText">Review receivables ageing · monitor leverage · test the next major decision</p>
-    </div>
-  </div>
-  <div class="report-actions">
-    <button class="report-primary" id="downloadReport">Download report</button>
-    <button class="report-secondary" id="copyReport">Copy summary</button>
-    <button class="report-secondary" id="printReport">Print / Save as PDF</button>
-  </div>
-  <div class="report-note">Prototype output only. Figures are indicative and should be reviewed with qualified financial professionals.</div>
-</div>
-
-</main></main>
+</main>
 <footer class="footer"><div class="wrap footer-inner"><div><strong>LYDIQ</strong> · Financial intelligence for SMEs</div><div>Prototype · No financial advice · Data stays in-browser</div></div></footer>
 <div class="modal" id="modal"><div class="modal-card"><button class="close" onclick="closeModal()">✕</button><div id="formBlock"><div class="eyebrow">Pilot application</div><h2 style="font-size:36px;letter-spacing:-.05em;margin:14px 0 8px">Help shape LYDIQ.</h2><p style="color:var(--muted)">This form is a prototype and stores nothing on a server. Use it to prepare your pilot outreach.</p><div class="notice">For the first pilot, we are most interested in SME owners, CFOs/controllers, accountants and advisors.</div><div class="field"><label>Name</label><input class="fieldInput" id="pname" placeholder="Your name"/></div><div class="field"><label>Role</label><input class="fieldInput" id="prole" placeholder="Founder, CFO, accountant…"/></div><div class="field"><label>Why would this be useful?</label><textarea class="fieldInput" id="pwhy" placeholder="What financial decision or problem would you use LYDIQ for?" rows="4"></textarea></div><button class="btn btn-primary" onclick="submitPilot()">Prepare pilot response →</button></div><div class="success" id="success"><div class="eyebrow">Ready</div><h2 style="font-size:36px;letter-spacing:-.05em">Pilot response prepared.</h2><p style="color:var(--muted)">Copy the text below and send it by email or LinkedIn to start the conversation.</p><textarea id="pilotText" rows="11" style="width:100%;border:1px solid var(--line);border-radius:14px;padding:12px;font:inherit"></textarea><div style="display:flex;gap:10px;margin-top:12px"><button class="btn btn-primary" onclick="navigator.clipboard.writeText(document.getElementById('pilotText').value)">Copy</button><button class="btn btn-light" onclick="closeModal()">Close</button></div></div></div></div>
 <script>
@@ -352,7 +324,38 @@ h1{font-size:38px;letter-spacing:-.04em;margin:0 0 8px}h2{font-size:18px;margin:
 <div class="card"><h2>Main driver</h2><p><strong>${d.driver}</strong></p><p class="muted">${d.driverText}</p></div>
 <div class="card"><h2>Recommended next actions</h2><p>${actions.replaceAll(' · ',' ·<br>')}</p></div>
 <div class="card"><p class="note">Prototype output only. This report is based on the current browser inputs and indicative prototype logic; it is not financial advice.</p></div>
-</div></body></html>`;
+</div>
+<script>
+function saveLYDIQReportState(){
+  const get=id=>document.getElementById(id);
+  const data={
+    revenue:+get('health_rev').value||0,
+    ebitda:+get('health_ebitda').value||0,
+    cash:+get('health_cash').value||0,
+    debt:+get('health_debt').value||0,
+    dso:+get('health_dso').value||0,
+    growth:+get('health_growth').value||0,
+    score:get('health_score').textContent,
+    runway:get('health_runway').textContent,
+    leverage:get('health_levOut').textContent,
+    liquidity:get('health_liqTxt').textContent,
+    workingCapital:get('health_wcTxt').textContent,
+    leverageScore:get('health_levTxt').textContent,
+    insightTitle:get('health_insightTitle').textContent,
+    insightText:get('health_insightText').textContent,
+    savedAt:new Date().toISOString()
+  };
+  localStorage.setItem('lydiqReportState',JSON.stringify(data));
+  return data;
+}
+
+document.getElementById('generateReportBtn')?.addEventListener('click',()=>{
+  saveLYDIQReportState();
+  window.location.href='report.html';
+});
+</script>
+
+</body></html>`;
 }
 document.getElementById('downloadReport')?.addEventListener('click',()=>{
   refreshLYDIQReport();
