@@ -1,209 +1,249 @@
 <!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LYDIQ — Financial Early Warning</title>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>LYDIQ — See the pressure before it hits.</title>
+<meta content="LYDIQ is a financial early-warning and decision intelligence prototype for SMEs." name="description"/>
 <style>
-:root{--bg:#f4f6fb;--paper:#fff;--ink:#0d1120;--muted:#687086;--line:#e4e8f1;--purple:#7657ff;--mint:#20c9a2;--amber:#ffb648;--red:#ff5d73}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-.wrap{max-width:1180px;margin:auto;padding:0 24px}.nav{height:80px;display:flex;align-items:center;justify-content:space-between}
-.brand{font-size:25px;font-weight:950;letter-spacing:-.05em}.brand span{color:var(--purple)} nav a{margin-left:20px;color:var(--muted);text-decoration:none;font-weight:800;font-size:14px}
-.hero{padding:64px 0 30px}.pill{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:999px;background:#ece8ff;border:1px solid #ddd6ff;color:#71639e;text-transform:uppercase;letter-spacing:.11em;font-weight:900;font-size:11px}.pill i{width:7px;height:7px;border-radius:50%;background:var(--mint)}
-h1{font-size:clamp(44px,6vw,74px);line-height:.95;letter-spacing:-.06em;margin:18px 0 16px} h1 span{color:var(--purple)}
-.hero p{max-width:760px;color:var(--muted);font-size:18px;line-height:1.5}
-.layout{display:grid;grid-template-columns:380px 1fr;gap:18px;padding:18px 0 80px}.panel{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 12px 34px rgba(20,25,50,.05)}
-.sticky{position:sticky;top:18px;align-self:start}.topline{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
-h2{margin:0;font-size:22px;letter-spacing:-.03em}.sub{color:var(--muted);font-size:13px;margin:6px 0 18px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin:12px 0}
-label{display:flex;justify-content:space-between;font-size:12px;font-weight:850;margin-bottom:7px}.field input[type=number]{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fbfcfe;font:inherit}.field input[type=range]{width:100%;accent-color:var(--purple)}
-.filebox{border:1px dashed #d5dbea;border-radius:14px;padding:12px;background:#fafbfe}.hint{font-size:11px;color:var(--muted);margin-top:8px}
-.btns{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:15px}.btn{border:0;border-radius:13px;padding:13px 15px;font:inherit;font-weight:900;cursor:pointer}.primary{background:var(--ink);color:#fff}.secondary{background:#fff;border:1px solid var(--line)}
-.scorebox{display:grid;grid-template-columns:210px 1fr;gap:14px;margin-top:16px}.score{background:#fbfbff;border:1px solid #e7e4ff;border-radius:22px;padding:20px;text-align:center}.score small{font-size:11px;letter-spacing:.12em;color:#7a8192;font-weight:900}.score strong{display:block;font-size:72px;line-height:1;margin:6px 0 7px;letter-spacing:-.08em}
-.status{display:inline-flex;padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900}.green{background:#eafbf6;color:#138a6e}.amber{background:#fff5df;color:#a96b00}.red{background:#fff0f3;color:#d63955}
-.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{border:1px solid var(--line);border-radius:18px;padding:14px}.metric small{display:block;color:var(--muted);font-size:11px;font-weight:750}.metric strong{display:block;font-size:22px;margin-top:5px}
-.chart{height:150px;margin-top:8px}.chart svg{width:100%;height:100%}.insight{margin-top:14px;border-radius:18px;background:#121621;color:#fff;padding:16px}.insight .tag{font-size:10px;color:#bfc5d5;text-transform:uppercase;letter-spacing:.12em;font-weight:900}.insight h3{margin:8px 0 6px;font-size:19px}.insight p{margin:0;color:#cbd1df;font-size:13px;line-height:1.5}
-.bars{display:grid;gap:12px;margin-top:16px}.row{display:grid;grid-template-columns:125px 1fr 42px;gap:10px;align-items:center;font-size:12px;font-weight:850}.track{height:9px;border-radius:999px;background:#edf0f5;overflow:hidden}.fill{height:100%;background:var(--purple);border-radius:999px}
-.section{margin-top:16px}.scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}.card{border:1px solid var(--line);border-radius:20px;padding:18px;background:#fff}.card strong{font-size:15px}
-.impact{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.impact div{border:1px solid var(--line);border-radius:14px;padding:11px}.impact small{display:block;color:var(--muted);font-size:10px;font-weight:800}.impact b{display:block;font-size:17px;margin-top:3px}
-.note{padding-top:13px;border-top:1px solid var(--line);margin-top:13px;color:var(--muted);font-size:13px;line-height:1.5}
-.imported{margin-top:10px;padding:10px 12px;border-radius:12px;background:#effbf7;border:1px solid #d5f3e9;color:#1d765f;font-size:12px;font-weight:800;display:none}
-footer{padding:20px 0 45px;color:var(--muted);font-size:12px}.foot{display:flex;justify-content:space-between;gap:15px}
-@media(max-width:930px){.layout{grid-template-columns:1fr}.sticky{position:static}.scorebox{grid-template-columns:1fr}.scenario-grid{grid-template-columns:1fr}}
-@media(max-width:600px){.grid2,.metrics,.impact{grid-template-columns:1fr}.hero h1{font-size:48px}nav{display:none}}
+:root{--bg:#f4f6fb;--paper:#fff;--ink:#0c1020;--muted:#687086;--line:#e4e8f1;--purple:#7657ff;--purple2:#5b40e8;--mint:#20c9a2;--red:#ff5d73;--amber:#ffb648;--shadow:0 24px 80px rgba(30,37,64,.12);--radius:24px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);line-height:1.45}.wrap{max-width:1180px;margin:auto;padding:0 24px}.nav{height:82px;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:900;letter-spacing:-.05em;font-size:24px}.brand span{color:var(--purple)}nav a{margin-left:26px;text-decoration:none;color:#566074;font-size:14px;font-weight:700}.btn{border:0;border-radius:13px;padding:13px 17px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}.btn-primary{background:var(--ink);color:#fff;box-shadow:0 10px 25px rgba(12,16,32,.16)}.btn-purple{background:var(--purple);color:#fff}.btn-light{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.hero{padding:56px 0 28px}.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:34px;align-items:center}.eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:#756a9a;background:#ece8ff;border:1px solid #ddd6ff;padding:7px 10px;border-radius:999px}.eyebrow b{width:7px;height:7px;border-radius:50%;background:var(--mint)}h1{font-size:clamp(50px,7vw,86px);line-height:.93;letter-spacing:-.065em;margin:18px 0 18px}.hero p{font-size:19px;color:var(--muted);max-width:590px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.mini{display:flex;gap:22px;flex-wrap:wrap;color:#687086;font-size:13px;font-weight:700;margin-top:18px}.mini span:before{content:"✓";color:var(--mint);margin-right:6px}
+.mock{background:#131722;color:#fff;border-radius:30px;padding:14px;box-shadow:var(--shadow);border:1px solid #222838}.window{background:#f6f7fb;color:var(--ink);border-radius:21px;overflow:hidden}.window-head{height:52px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 16px}.dots{display:flex;gap:5px}.dots i{width:7px;height:7px;border-radius:50%;background:#cdd2dc}.window-body{padding:20px}.score{display:grid;grid-template-columns:180px 1fr;gap:14px}.score-card,.insight,.metric,.sim-panel{background:#fff;border:1px solid var(--line);border-radius:18px}.score-card{padding:18px;text-align:center}.score-num{font-size:60px;font-weight:900;letter-spacing:-.06em;color:#11183a}.pill{display:inline-flex;padding:6px 9px;border-radius:999px;font-size:11px;font-weight:900;background:#fff0f3;color:#d63955}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.metric{padding:14px}.metric small{color:var(--muted);font-weight:700}.metric strong{font-size:20px;display:block;margin-top:3px}.spark{height:125px;margin-top:12px}.spark svg{width:100%;height:100%}.insight{padding:14px;margin-top:12px}.insight b{display:block;margin-bottom:6px}.insight p{margin:0;color:var(--muted);font-size:13px}
+.section{padding:78px 0}.section-head{max-width:720px;margin-bottom:26px}.section h2{font-size:44px;line-height:1;letter-spacing:-.05em;margin:12px 0}.section-head p{color:var(--muted);font-size:17px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px}.card .k{font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#7b8497}.card h3{margin:10px 0 7px;font-size:21px}.card p{color:var(--muted);margin:0}.bigband{background:#121621;color:#fff;border-radius:28px;padding:36px;display:flex;justify-content:space-between;align-items:end;gap:20px}.bigband h2{max-width:650px;margin:10px 0 0}.bigband p{color:#aab1c4;max-width:680px}
+.demo{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px}.panel{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px}.field{margin:14px 0}.field label{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:7px}.field input{width:100%;accent-color:var(--purple)}.field input[type=number]{appearance:textfield;padding:12px;border:1px solid var(--line);border-radius:12px;font:inherit}.helper{font-size:12px;color:var(--muted);margin-top:4px}.result-head{display:flex;justify-content:space-between;align-items:center}.result-score{font-size:55px;font-weight:900;letter-spacing:-.06em}.status{padding:7px 10px;border-radius:999px;font-size:12px;font-weight:900}.bars{display:grid;gap:10px;margin-top:20px}.bar-row{display:grid;grid-template-columns:120px 1fr 50px;gap:9px;align-items:center;font-size:12px;font-weight:800}.bar{height:9px;border-radius:99px;background:#edf0f5;overflow:hidden}.bar > i{display:block;height:100%;border-radius:99px;background:var(--purple)}.explain{margin-top:18px;border-top:1px solid var(--line);padding-top:18px}.explain p{color:var(--muted)}.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.act{padding:12px;border:1px solid var(--line);border-radius:14px;font-size:12px}.act b{display:block;margin-bottom:3px}.table{width:100%;border-collapse:collapse;margin-top:12px}.table td{padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}.table td:last-child{text-align:right;font-weight:900}
+.input-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.cta{padding:70px 0}.cta-box{background:linear-gradient(135deg,#7253ff,#4c3bc5);color:#fff;border-radius:30px;padding:42px}.cta-box h2{font-size:48px;line-height:1;letter-spacing:-.05em;margin:0 0 14px;max-width:700px}.cta-box p{color:#dedaff;max-width:690px}.footer{padding:30px 0 50px;color:#7b8497;font-size:13px;border-top:1px solid var(--line)}.footer-inner{display:flex;justify-content:space-between;gap:20px}
+.modal{position:fixed;inset:0;background:rgba(10,14,25,.56);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.modal-card{background:#fff;max-width:650px;width:100%;border-radius:24px;padding:26px;position:relative;max-height:90vh;overflow:auto}.close{position:absolute;right:16px;top:14px;background:#f0f2f6;border:0;border-radius:10px;padding:8px;cursor:pointer}.success{display:none}.success.show{display:block}.notice{background:#f7f5ff;border:1px solid #e4ddff;border-radius:14px;padding:12px;font-size:12px;color:#4f4778;margin-bottom:12px}
+@media(max-width:900px){.hero-grid,.demo{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.score{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.actions{grid-template-columns:1fr}.bigband,.footer-inner{flex-direction:column;align-items:flex-start}nav{display:none}}
+@media(max-width:560px){h1{font-size:54px}.section h2{font-size:38px}.metrics,.input-grid{grid-template-columns:1fr}.hero{padding-top:30px}}
 </style>
-</head>
+<style>
+:root{--bg:#f4f6fb;--paper:#fff;--ink:#0c1020;--muted:#687086;--line:#e4e8f1;--purple:#7657ff;--mint:#20c9a2;--red:#ff5d73;--amber:#ffb648;--shadow:0 24px 70px rgba(22,28,52,.10)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:1180px;margin:auto;padding:0 24px}.nav{height:80px;display:flex;align-items:center;justify-content:space-between}.brand{font-size:24px;font-weight:950;letter-spacing:-.05em}.brand span{color:var(--purple)}.nav a{color:var(--muted);text-decoration:none;font-weight:750;font-size:14px;margin-left:20px}.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:#ece8ff;border:1px solid #ddd6ff;color:#72659c;text-transform:uppercase;font-size:11px;font-weight:900;letter-spacing:.12em;padding:7px 10px}.pill i{width:7px;height:7px;background:var(--mint);border-radius:50%}
+header.hero{padding:60px 0 24px}.hero h1{font-size:clamp(44px,6vw,72px);line-height:.95;letter-spacing:-.065em;margin:18px 0 14px}.hero h1 span{color:var(--purple)}.hero p{font-size:18px;color:var(--muted);max-width:760px}
+.layout{display:grid;grid-template-columns:380px 1fr;gap:18px;padding:18px 0 70px}.panel{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 10px 30px rgba(32,37,58,.04)}.sticky{position:sticky;top:18px;align-self:start}.panel h2{margin:0;font-size:22px;letter-spacing:-.03em}.sub{color:var(--muted);font-size:13px;margin:5px 0 18px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin:12px 0}.field label{font-size:12px;font-weight:850;display:flex;justify-content:space-between;margin-bottom:7px}.field input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:12px;font:inherit;background:#fbfcfe}.field input[type=range]{padding:0;accent-color:var(--purple)}.hint{color:var(--muted);font-size:11px}.btn{border:0;border-radius:13px;padding:13px 16px;font-weight:900;cursor:pointer}.primary{background:var(--ink);color:white;width:100%}.secondary{background:#fff;border:1px solid var(--line)}.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}.seg .btn{font-size:12px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:15px}.scorebox{display:grid;grid-template-columns:210px 1fr;gap:14px;margin-top:16px}.health-score-card{background:#fbfbff;border:1px solid #e7e4ff;border-radius:22px;padding:20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:240px}.health-score-card small{font-weight:850;color:#7a8192;font-size:11px;letter-spacing:.12em}.health-score-card strong{display:block;font-size:72px;letter-spacing:-.07em;line-height:1;margin-top:5px}.status{display:inline-flex;padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;margin-top:8px}.status.green{background:#eafbf6;color:#138a6e}.status.amber{background:#fff5df;color:#a96b00}.status.red{background:#fff0f3;color:#d63955}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{border:1px solid var(--line);border-radius:18px;padding:14px;background:#fff}.metric small{display:block;color:var(--muted);font-weight:750;font-size:11px}.metric strong{display:block;font-size:22px;margin-top:5px;letter-spacing:-.03em}.chart{height:155px;margin-top:10px}.chart svg{width:100%;height:100%}.insight{margin-top:14px;border-radius:18px;padding:16px;background:#121621;color:#fff}.insight .tag{font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:#bfc5d5}.insight h3{margin:7px 0;font-size:19px}.insight p{margin:0;color:#c9cfdd;font-size:13px}.bars{margin-top:16px;display:grid;gap:12px}.row{display:grid;grid-template-columns:125px 1fr 42px;gap:10px;align-items:center;font-size:12px;font-weight:850}.track{height:9px;border-radius:99px;background:#eef1f5;overflow:hidden}.fill{height:100%;border-radius:99px;background:var(--purple)}
+.section{margin-top:16px}.section h2{font-size:26px;letter-spacing:-.04em;margin:0}.scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}.card{border:1px solid var(--line);border-radius:20px;padding:18px;background:#fff}.scenario-card{display:grid;gap:12px}.delta{display:grid;grid-template-columns:1fr 110px;gap:10px;align-items:center}.delta input{width:100%}.impact{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.impact div{border:1px solid var(--line);border-radius:14px;padding:11px}.impact small{display:block;color:var(--muted);font-size:10px;font-weight:800}.impact strong{display:block;font-size:17px;margin-top:3px}.explain{padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}.action{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.action span{padding:7px 9px;border-radius:999px;border:1px solid var(--line);font-size:11px;font-weight:800}
+footer{padding:25px 0 45px;color:var(--muted);font-size:12px}.footer-inner{display:flex;justify-content:space-between;gap:15px}
+@media(max-width:930px){.layout{grid-template-columns:1fr}.sticky{position:static}.scorebox{grid-template-columns:1fr}.scenario-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.grid2,.metrics,.impact{grid-template-columns:1fr}.nav nav{display:none}.hero h1{font-size:48px}}
+</style></head>
 <body>
-<header class="wrap nav">
-  <div class="brand">LYD<span>IQ</span></div>
-  <nav><a href="#health">Health Check</a><a href="#scenarios">Decision Simulator</a></nav>
-</header>
-
-<section class="wrap hero">
-  <span class="pill"><i></i> Financial early warning + decision intelligence</span>
-  <h1>See the pressure.<br><span>Before it hits.</span></h1>
-  <p>LYDIQ turns a handful of SME financial inputs into an explainable health check and a decision simulation. This prototype runs in your browser and stores nothing on a server.</p>
-</section>
-
+<header class="wrap nav"><div class="brand">LYD<span>IQ</span></div><nav><a href="#product">Product</a><a href="#health">Demo</a><a href="#pilot">Pilot</a><a href="#contact">Contact</a></nav><a class="btn btn-primary" href="#health">Try LYDIQ</a></header>
+<main>
+<section class="hero wrap"><div class="hero-grid"><div><span class="eyebrow"><b></b> Financial early warning + decision intelligence</span><h1>See the pressure.<br/><span style="color:var(--purple)">Before it hits.</span></h1><p>LYDIQ helps SMEs spot emerging financial pressure, understand what is driving it, and stress-test decisions before they become expensive problems.</p><div class="hero-actions"><a class="btn btn-primary" href="#health">Run a health check →</a><button class="btn btn-light" onclick="openModal()">Join the pilot</button></div><div class="mini"><span>No integration needed</span><span>Prototype data only</span><span>Explainable outputs</span></div></div>
+<div class="mock"><div class="window"><div class="window-head"><strong>LYDIQ / Financial Health</strong><span style="font-size:11px;color:#778096">Sample SME</span></div><div class="window-body"><div class="score"><div class="score-card"><div style="font-size:12px;color:#788195;font-weight:800">RESILIENCE</div><div class="score-num">74</div><span class="pill">Moderate pressure</span></div><div><div class="metrics"><div class="metric"><small>Cash runway</small><strong>11.8 wks</strong></div><div class="metric"><small>DSO</small><strong>68 days</strong></div><div class="metric"><small>Debt / EBITDA</small><strong>1.9×</strong></div></div><div class="spark"><svg preserveaspectratio="none" viewbox="0 0 500 125"><path d="M0 100 C80 95 110 87 150 92 S220 80 260 67 S330 72 360 52 S420 45 500 18" fill="none" stroke="#7657ff" stroke-linecap="round" stroke-width="5"></path><path d="M0 100 C80 95 110 87 150 92 S220 80 260 67 S330 72 360 52 S420 45 500 18 L500 125 L0 125Z" fill="#eeeaff"></path></svg></div></div></div><div class="insight"><b>⚠ Pressure building in working capital</b><p>Receivables are growing faster than cash. At current payment behaviour, the next 8–10 weeks become materially tighter.</p></div></div></div></div></div></section>
+<section class="section wrap" id="product"><div class="section-head"><span class="eyebrow">Why LYDIQ</span><h2>Don't just forecast cash.<br/>Stress-test the decision.</h2><p>Most small businesses discover pressure when the problem is already visible in the bank account. LYDIQ is designed around the earlier question: <strong>what is changing, why, and what happens if I act?</strong></p></div><div class="cards"><div class="card"><div class="k">01 / Detect</div><h3>Spot pressure earlier</h3><p>Combine a few core financial signals into a simple, explainable view of liquidity, working-capital and leverage pressure.</p></div><div class="card"><div class="k">02 / Explain</div><h3>Know what is driving it</h3><p>Turn a score into the underlying drivers, not a black-box number that leaves the manager guessing.</p></div><div class="card"><div class="k">03 / Decide</div><h3>See the effect of action</h3><p>Simulate growth, slower collections or new debt and compare the financial consequences before committing.</p></div></div></section>
+<section class="section wrap"><div class="bigband"><div><span class="eyebrow" style="background:#20263a;color:#b9b1ff;border-color:#333a52">The workflow</span><h2>Pressure → Explanation → Decision → Action</h2><p>Start with a lightweight assessment today. The long-term product can connect richer data sources later — but the decision workflow should stay simple.</p></div><a class="btn btn-purple" href="#health">Test the workflow →</a></div></section>
+<section class="section wrap" id="demo"><div class="section-head"><span class="eyebrow">Live prototype</span><h2>Run a LYDIQ health check.</h2><p>Use sample inputs or your own numbers. The prototype runs entirely in your browser and does not upload data.</p></div><div class="demo"><div class="panel"><h3 style="margin-top:0">1. Business inputs</h3><div class="input-grid"><div class="field"><label>Annual revenue (€)</label><input id="revenue" min="0" step="50000" type="number" value="3000000"/></div><div class="field"><label>EBITDA (€)</label><input id="ebitda" min="0" step="10000" type="number" value="420000"/></div><div class="field"><label>Cash (€)</label><input id="cash" min="0" step="10000" type="number" value="360000"/></div><div class="field"><label>Debt (€)</label><input id="debt" min="0" step="10000" type="number" value="800000"/></div></div><div class="field"><label>DSO <span id="dsoVal">68 days</span></label><input id="dso" max="120" min="20" type="range" value="68"/><div class="helper">Average days customers take to pay.</div></div><div class="field"><label>Revenue growth <span id="growthVal">+5%</span></label><input id="growth" max="30" min="-20" type="range" value="5"/><div class="helper">Expected change over the next 12 months.</div></div><button class="btn btn-primary" onclick="runCheck()">Calculate LYDIQ score →</button></div>
+<div class="panel"><div class="result-head"><div><div style="font-size:12px;font-weight:900;color:#778096;letter-spacing:.12em">CURRENT RESILIENCE</div><div class="result-score" id="score">74</div></div><div class="status" id="status">MODERATE PRESSURE</div></div><div class="bars"><div class="bar-row"><span>Liquidity</span><div class="bar"><i id="liqBar" style="width:72%"></i></div><span id="liqTxt">72</span></div><div class="bar-row"><span>Working capital</span><div class="bar"><i id="wcBar" style="width:58%"></i></div><span id="wcTxt">58</span></div><div class="bar-row"><span>Leverage</span><div class="bar"><i id="levBar" style="width:64%"></i></div><span id="levTxt">64</span></div></div><div class="explain"><h3 style="margin:0 0 4px">What LYDIQ sees</h3><p id="explanation">Receivables are absorbing cash faster than the current balance sheet comfortably supports. Payment speed is the main pressure point.</p></div><table class="table"><tr><td>Cash runway proxy</td><td id="runway">11.8 weeks</td></tr><tr><td>Debt / EBITDA</td><td id="leverage">1.9×</td></tr><tr><td>Estimated extra working capital</td><td id="wcNeed">€151k</td></tr></table><div class="actions"><div class="act"><b>① Improve collections</b><span>Lower DSO to release cash tied up in receivables.</span></div><div class="act"><b>② Protect margin</b><span>Growth that burns more cash can worsen the position.</span></div><div class="act"><b>③ Test new debt</b><span>Compare financing need with repayment capacity.</span></div></div></div></div></section>
+<section class="section wrap" id="pilot"><div class="section-head"><span class="eyebrow">Pilot</span><h2>Validate the problem with real operators.</h2><p>The first version should be tested with 5–10 people who manage, advise or analyse SMEs. The goal is not compliments; it is evidence that the workflow solves a real decision problem.</p></div><div class="cards"><div class="card"><div class="k">Ask</div><h3>“How do you spot pressure today?”</h3><p>Understand the current process before showing the product.</p></div><div class="card"><div class="k">Test</div><h3>Give them one decision.</h3><p>Ask them to simulate collections, growth or debt and observe where they hesitate.</p></div><div class="card"><div class="k">Measure</div><h3>Would they use it again?</h3><p>Track repeat intent, the problem they valued most, and what data they would actually provide.</p></div></div><div style="margin-top:18px"><button class="btn btn-purple" onclick="openModal()">Apply for the pilot →</button></div></section>
+<section class="cta wrap" id="contact"><div class="cta-box"><h2>From a good idea to evidence.</h2><p>LYDIQ is currently a product prototype. The next milestone is simple: put it in front of real SME operators, learn what matters, and build only what the evidence supports.</p><button class="btn btn-light" onclick="copyPitch()">Copy the LYDIQ pitch</button></div></section>
 <main class="wrap layout" id="health">
-<aside class="panel sticky">
-  <h2>Business inputs</h2>
-  <div class="sub">Enter approximate numbers. LYDIQ is a prototype, not financial advice.</div>
-  <div class="grid2">
-    <div class="field"><label>Revenue (€)</label><input id="rev" type="number" value="3000000"></div>
-    <div class="field"><label>EBITDA (€)</label><input id="ebitda" type="number" value="420000"></div>
-    <div class="field"><label>Cash (€)</label><input id="cash" type="number" value="360000"></div>
-    <div class="field"><label>Debt (€)</label><input id="debt" type="number" value="800000"></div>
-  </div>
-
-  <div class="field"><label>DSO <span id="dsoLabel">68 days</span></label><input id="dso" type="range" min="20" max="120" value="68"></div>
-  <div class="field"><label>Expected revenue growth <span id="growthLabel">+5%</span></label><input id="growth" type="range" min="-20" max="30" value="5"></div>
-
-  <div class="field">
-    <label>Upload company data <span style="color:#687086">CSV / XLSX</span></label>
-    <div class="filebox"><input id="fileInput" type="file" accept=".csv,.xlsx,.xls"></div>
-    <div id="fileHint" class="hint">CSV import works directly in the browser. XLSX support is experimental in this prototype.</div>
-    <div id="imported" class="imported"></div>
-  </div>
-
-  <div class="btns">
-    <button class="btn secondary" id="sample">Load sample</button>
-    <button class="btn primary" id="run">Run check</button>
-  </div>
-</aside>
-
+<aside class="panel sticky"><h2>Business inputs</h2><div class="sub">Enter approximate numbers. LYDIQ is a prototype, not financial advice.</div>
+<div class="grid2"><div class="field"><label>Revenue (€)</label><input id="health_rev" min="0" type="number" value="3000000"/></div><div class="field"><label>EBITDA (€)</label><input id="health_ebitda" min="0" type="number" value="420000"/></div><div class="field"><label>Cash (€)</label><input id="health_cash" min="0" type="number" value="360000"/></div><div class="field"><label>Debt (€)</label><input id="health_debt" min="0" type="number" value="800000"/></div></div>
+<div class="field"><label>DSO <span id="health_dsoLabel">68 days</span></label><input id="health_dso" max="120" min="20" type="range" value="68"/></div>
+<div class="field"><label>Expected revenue growth <span id="health_growthLabel">+5%</span></label><input id="health_growth" max="30" min="-20" type="range" value="5"/></div>
+<div class="field" style="margin-top:16px"><label>Upload company data <span style="color:#687086;font-weight:700">CSV / XLSX</span></label><input accept=".csv,.xlsx,.xls" id="health_fileInput" style="padding:10px;border:1px dashed #d8ddea;border-radius:12px;background:#fafbfe" type="file"><div class="hint" id="health_fileHint" style="margin-top:8px">Optional. LYDIQ will try to map common financial fields automatically.</div></input></div><div class="seg"><button class="btn secondary" id="health_sample">Load sample</button><button class="btn primary" id="health_run">Run check</button></div>
+<div class="hint" style="margin-top:12px">The calculations are indicative prototype logic designed to demonstrate the workflow.</div></aside>
 <section>
-<div class="panel">
-  <div class="topline"><div><h2>Financial Health</h2><div class="sub">Current operating snapshot</div></div><span class="pill" style="background:#eefbf7;border-color:#d6f5ec;color:#4a7f70">Prototype</span></div>
-  <div class="scorebox">
-    <div class="score"><small>RESILIENCE SCORE</small><strong id="score">74</strong><span id="status" class="status amber">MODERATE PRESSURE</span></div>
-    <div>
-      <div class="metrics">
-        <div class="metric"><small>Cash runway</small><strong id="runway">11.8 wks</strong></div>
-        <div class="metric"><small>DSO</small><strong id="dsoOut">68 d</strong></div>
-        <div class="metric"><small>Debt / EBITDA</small><strong id="levOut">1.9×</strong></div>
-      </div>
-      <div class="chart"><svg viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M0 120 C80 110 120 118 160 96 S230 100 265 84 S325 70 355 74 S420 58 500 30 L500 150 L0 150Z" fill="#eeeaff"></path><path d="M0 120 C80 110 120 118 160 96 S230 100 265 84 S325 70 355 74 S420 58 500 30" fill="none" stroke="#7657ff" stroke-width="5" stroke-linecap="round"></path></svg></div>
-    </div>
-  </div>
-  <div class="insight"><div class="tag">What LYDIQ sees</div><h3 id="insightTitle">Pressure building in working capital</h3><p id="insightText">Receivables are growing faster than cash. At current payment behaviour, liquidity becomes materially tighter.</p></div>
-  <div class="bars">
-    <div class="row"><span>Liquidity</span><div class="track"><div class="fill" id="liq" style="width:72%"></div></div><span id="liqTxt">72</span></div>
-    <div class="row"><span>Working capital</span><div class="track"><div class="fill" id="wc" style="width:58%"></div></div><span id="wcTxt">58</span></div>
-    <div class="row"><span>Leverage</span><div class="track"><div class="fill" id="lev" style="width:64%"></div></div><span id="levTxt">64</span></div>
-  </div>
-</div>
-
-<div class="panel section" id="scenarios">
-  <h2>Decision Simulator</h2>
-  <div class="sub">Change one decision and see the directional impact.</div>
-  <div class="scenario-grid">
-    <div class="card">
-      <strong>Scenario A · Customer terms</strong>
-      <div class="field"><label>Change DSO <span id="simDsoVal">83 days</span></label><input id="simDso" type="range" min="30" max="110" value="83"></div>
-      <div class="impact">
-        <div><small>Cash tied up</small><b id="impactCash">€124k</b></div>
-        <div><small>Score impact</small><b id="impactScore">−5</b></div>
-        <div><small>Risk</small><b id="impactRisk">Higher</b></div>
-      </div>
-      <div class="note" id="simExplain">Extending customer payment time increases working capital needs and reduces liquidity headroom.</div>
-    </div>
-    <div class="card">
-      <strong>Scenario B · Growth plan</strong>
-      <div class="field"><label>Revenue growth <span id="simGrowthVal">+15%</span></label><input id="simGrowth" type="range" min="-10" max="30" value="15"></div>
-      <div class="impact">
-        <div><small>Revenue uplift</small><b id="growthUplift">€450k</b></div>
-        <div><small>Liquidity effect</small><b id="growthImpact">Mixed</b></div>
-        <div><small>Risk</small><b id="growthRisk">Moderate</b></div>
-      </div>
-      <div class="note" id="growthExplain">Growth can improve economics, but the cash outcome depends on margin and working-capital discipline.</div>
-    </div>
-  </div>
-</div>
+<div class="panel"><div class="topline"><div><h2>Financial Health</h2><div class="sub">Current operating snapshot</div></div><span class="pill" style="background:#eefbf7;border-color:#d6f5ec;color:#4a7f70">Prototype</span></div>
+<div class="scorebox"><div class="health-score-card"><small>RESILIENCE SCORE</small><strong id="health_score">74</strong><span class="status amber" id="health_status">MODERATE PRESSURE</span></div>
+<div><div class="metrics"><div class="metric"><small>Cash runway</small><strong id="health_runway">11.8 wks</strong></div><div class="metric"><small>DSO</small><strong id="health_dsoOut">68 d</strong></div><div class="metric"><small>Debt / EBITDA</small><strong id="health_levOut">1.9×</strong></div></div>
+<div class="chart"><svg preserveaspectratio="none" viewbox="0 0 500 155"><path d="M0 118 C80 108 125 116 160 95 S230 98 260 84 S320 70 350 73 S410 60 500 30 L500 155 L0 155Z" fill="#eeeaff" id="health_area"></path><path d="M0 118 C80 108 125 116 160 95 S230 98 260 84 S320 70 350 73 S410 60 500 30" fill="none" id="health_line" stroke="#7657ff" stroke-linecap="round" stroke-width="5"></path></svg></div></div></div>
+<div class="insight"><div class="tag">What LYDIQ sees</div><h3 id="health_insightTitle">Pressure building in working capital</h3><p id="health_insightText">Receivables are growing faster than cash. At current payment behaviour, liquidity becomes materially tighter.</p></div>
+<div class="bars"><div class="row"><span>Liquidity</span><div class="track"><div class="fill" id="health_liq" style="width:72%"></div></div><span id="health_liqTxt">72</span></div><div class="row"><span>Working capital</span><div class="track"><div class="fill" id="health_wc" style="width:58%"></div></div><span id="health_wcTxt">58</span></div><div class="row"><span>Leverage</span><div class="track"><div class="fill" id="health_lev" style="width:64%"></div></div><span id="health_levTxt">64</span></div></div></div>
+<div class="panel section" id="health_scenarios"><div class="topline"><div><h2>Decision Simulator</h2><div class="sub">Change one decision and see the directional impact.</div></div></div><div class="scenario-grid">
+<div class="card scenario-card"><strong>Scenario A · Customer terms</strong><div class="delta"><label>Change DSO</label><input id="health_simDso" max="110" min="30" type="range" value="83"/></div><div style="font-size:12px;font-weight:800"><span id="health_simDsoVal">83</span> days</div><div class="impact"><div><small>Cash tied up</small><strong id="health_impactCash">€124k</strong></div><div><small>Score impact</small><strong id="health_impactScore">−5</strong></div><div><small>Risk</small><strong id="health_impactRisk">Higher</strong></div></div><div class="explain" id="health_simExplain">Extending customer payment time increases working capital needs and reduces liquidity headroom.</div></div>
+<div class="card scenario-card"><strong>Scenario B · Growth plan</strong><div class="delta"><label>Revenue growth</label><input id="health_simGrowth" max="30" min="-10" type="range" value="15"/></div><div style="font-size:12px;font-weight:800"><span id="health_simGrowthVal">+15</span>%</div><div class="impact"><div><small>Revenue uplift</small><strong id="health_growthUplift">€450k</strong></div><div><small>Liquidity effect</small><strong id="health_growthImpact">Mixed</strong></div><div><small>Risk</small><strong id="health_growthRisk">Moderate</strong></div></div><div class="explain" id="health_growthExplain">Growth can improve economics, but the cash outcome depends on margin and working-capital discipline.</div></div>
+</div><div class="card" style="margin-top:16px"><strong>Recommended next move</strong><div class="action" id="health_actions"><span>Review receivables ageing</span><span>Test collection improvements</span><span>Stress-test financing need</span></div></div></div>
 </section>
-</main>
-
-<footer><div class="wrap foot"><div><strong>LYDIQ</strong> · Financial Early Warning & Decision Intelligence</div><div>Prototype only · local browser processing · no financial advice</div></div></footer>
-
+</main></main>
+<footer class="footer"><div class="wrap footer-inner"><div><strong>LYDIQ</strong> · Financial intelligence for SMEs</div><div>Prototype · No financial advice · Data stays in-browser</div></div></footer>
+<div class="modal" id="modal"><div class="modal-card"><button class="close" onclick="closeModal()">✕</button><div id="formBlock"><div class="eyebrow">Pilot application</div><h2 style="font-size:36px;letter-spacing:-.05em;margin:14px 0 8px">Help shape LYDIQ.</h2><p style="color:var(--muted)">This form is a prototype and stores nothing on a server. Use it to prepare your pilot outreach.</p><div class="notice">For the first pilot, we are most interested in SME owners, CFOs/controllers, accountants and advisors.</div><div class="field"><label>Name</label><input class="fieldInput" id="pname" placeholder="Your name"/></div><div class="field"><label>Role</label><input class="fieldInput" id="prole" placeholder="Founder, CFO, accountant…"/></div><div class="field"><label>Why would this be useful?</label><textarea class="fieldInput" id="pwhy" placeholder="What financial decision or problem would you use LYDIQ for?" rows="4"></textarea></div><button class="btn btn-primary" onclick="submitPilot()">Prepare pilot response →</button></div><div class="success" id="success"><div class="eyebrow">Ready</div><h2 style="font-size:36px;letter-spacing:-.05em">Pilot response prepared.</h2><p style="color:var(--muted)">Copy the text below and send it by email or LinkedIn to start the conversation.</p><textarea id="pilotText" rows="11" style="width:100%;border:1px solid var(--line);border-radius:14px;padding:12px;font:inherit"></textarea><div style="display:flex;gap:10px;margin-top:12px"><button class="btn btn-primary" onclick="navigator.clipboard.writeText(document.getElementById('pilotText').value)">Copy</button><button class="btn btn-light" onclick="closeModal()">Close</button></div></div></div></div>
 <script>
 const $=id=>document.getElementById(id);
+function euro(n){return new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n)}
+function runCheck(){
+ const rev=+$('revenue').value||0, ebitda=+$('ebitda').value||0, cash=+$('cash').value||0, debt=+$('debt').value||0, dso=+$('dso').value||0, growth=+$('growth').value||0;
+ const margin=rev?ebitda/rev:0, lev=ebitda?debt/ebitda:9, wcNeed=Math.max(0,(rev/365)*dso-(rev/365)*45);
+ const liq=Math.max(0,Math.min(100,55+cash/Math.max(1,rev)*1800-margin*60));
+ const wc=Math.max(0,Math.min(100,100-(dso-30)*0.85));
+ const levScore=Math.max(0,Math.min(100,100-(lev-1)*24));
+ let score=Math.round(liq*.36+wc*.36+levScore*.28);
+ score=Math.max(0,Math.min(100,score + Math.max(-8,Math.min(8,growth*.15))));
+ let status=score>=80?'LOW PRESSURE':score>=60?'MODERATE PRESSURE':'HIGH PRESSURE';
+ $('score').textContent=score;$('status').textContent=status;
+ $('status').style.background=score>=80?'#eafbf6':score>=60?'#fff6e6':'#fff0f3';$('status').style.color=score>=80?'#138a6e':score>=60?'#a96b00':'#d63955';
+ [['liq',liq],['wc',wc],['lev',levScore]].forEach(([k,v])=>{$(k+'Bar').style.width=v+'%';$(k+'Txt').textContent=Math.round(v)});
+ $('runway').textContent=(cash/Math.max(1,(rev-ebitda)/52)).toFixed(1)+' weeks';$('leverage').textContent=(lev||0).toFixed(1)+'×';$('wcNeed').textContent=euro(wcNeed);
+ let expl=score<60?'Liquidity is the immediate pressure point. The business has limited room for error if collections slow down or costs rise.':dso>70?'Working capital is the dominant pressure point. Customers are taking longer to pay, which absorbs cash even if the P&L still looks healthy.':lev>3?'Leverage is the dominant pressure point. New financing could improve liquidity while materially increasing repayment pressure.':growth<0?'The plan assumes contraction. Focus on cash preservation and fixed-cost flexibility before chasing growth.':'The financial position is workable, but receivables and leverage should be monitored. The next decision should be tested rather than made from a single forecast.';
+ $('explanation').textContent=expl;
+}
+['dso','growth'].forEach(id=>$(id).addEventListener('input',()=>{if(id==='dso')$('dsoVal').textContent=$('dso').value+' days';else $('growthVal').textContent=(+$('growth').value>=0?'+':'')+$('growth').value+'%';}));
+['revenue','ebitda','cash','debt','dso','growth'].forEach(id=>$(id).addEventListener('change',runCheck));runCheck();
+function openModal(){$('modal').classList.add('open')};function closeModal(){$('modal').classList.remove('open')}
+function submitPilot(){const n=$('pname').value||'there',r=$('prole').value||'SME professional',w=$('pwhy').value||'I would like to explore the workflow.';$('pilotText').value=`Hi, I’m ${n}. I work as ${r}.\n\nI’d like to participate in the LYDIQ pilot because ${w}\n\nLYDIQ is testing a financial early-warning and decision-intelligence workflow for SMEs. I’d be happy to test it and give practical feedback on where it is useful and where it needs improvement.\n\nBest,\n${n}`;$('formBlock').style.display='none';$('success').classList.add('show')}
+function copyPitch(){navigator.clipboard.writeText('LYDIQ helps SMEs spot emerging financial pressure, understand what is driving it, and stress-test decisions before they become expensive problems. Instead of only forecasting cash, LYDIQ connects early warning with decision simulation.');alert('Pitch copied.');}
+window.addEventListener('click',e=>{if(e.target===$('modal'))closeModal()});
+</script>
+<script>
 const money=n=>new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
-
 function calculate(){
-  const rev=+$('rev').value||0, ebitda=+$('ebitda').value||0, cash=+$('cash').value||0, debt=+$('debt').value||0, dso=+$('dso').value||0, growth=+$('growth').value||0;
-  const margin=rev?ebitda/rev:0, leverage=ebitda?debt/ebitda:9;
-  const liq=Math.max(0,Math.min(100,55+(cash/Math.max(1,rev))*1800-margin*60));
-  const wc=Math.max(0,Math.min(100,100-(dso-30)*.85));
-  const levScore=Math.max(0,Math.min(100,100-(leverage-1)*24));
-  let score=Math.round(liq*.36+wc*.36+levScore*.28+Math.max(-8,Math.min(8,growth*.15)));
-  score=Math.max(0,Math.min(100,score));
-  $('score').textContent=score; $('dsoOut').textContent=dso+' d'; $('levOut').textContent=leverage.toFixed(1)+'×';
-  const weeklyBurn=Math.max(1,(rev-ebitda)/52); $('runway').textContent=(cash/weeklyBurn).toFixed(1)+' wks';
-  [['liq',liq],['wc',wc],['lev',levScore]].forEach(([k,v])=>{$(k).style.width=v+'%';$(k+'Txt').textContent=Math.round(v)});
-  const st=score>=80?['LOW PRESSURE','green']:score>=60?['MODERATE PRESSURE','amber']:['HIGH PRESSURE','red'];
-  $('status').textContent=st[0]; $('status').className='status '+st[1];
-  if(dso>=75){$('insightTitle').textContent='Working capital is the main pressure point';$('insightText').textContent=`Receivables are absorbing about ${money(Math.max(0,(rev/365)*(dso-45)))} of additional working capital versus a 45-day baseline. Collections are the first lever to test.`}
-  else if(leverage>=3){$('insightTitle').textContent='Leverage is limiting headroom';$('insightText').textContent='Debt service capacity is becoming the main constraint. Before adding financing, test the downside case and repayment burden.'}
-  else if(cash<weeklyBurn*8){$('insightTitle').textContent='Liquidity headroom is thin';$('insightText').textContent='The current cash buffer is relatively short versus the operating burn proxy. The next priority is preserving cash flexibility.'}
-  else if(growth<0){$('insightTitle').textContent='The plan assumes contraction';$('insightText').textContent='A declining revenue plan makes cash preservation and fixed-cost flexibility more important than aggressive investment.'}
-  else {$('insightTitle').textContent='Financial position is workable';$('insightText').textContent='The position has reasonable headroom, but receivables and leverage should be monitored and decisions tested under downside assumptions.'}
-  updateScenario();
+ const rev=+$('health_rev').value||0, ebitda=+$('health_ebitda').value||0, cash=+$('health_cash').value||0, debt=+$('health_debt').value||0, dso=+$('health_dso').value||0, growth=+$('health_growth').value||0;
+ const margin=rev?ebitda/rev:0, leverage=ebitda?debt/ebitda:9;
+ const wcNeed=Math.max(0,(rev/365)*(dso-45));
+ const liq=Math.max(0,Math.min(100,55 + (cash/Math.max(1,rev))*1800 - margin*60));
+ const wc=Math.max(0,Math.min(100,100-(dso-30)*0.85));
+ const levScore=Math.max(0,Math.min(100,100-(leverage-1)*24));
+ let score=Math.round(liq*.36+wc*.36+levScore*.28+Math.max(-8,Math.min(8,growth*.15)));
+ score=Math.max(0,Math.min(100,score));
+ $('health_score').textContent=score; $('health_dsoOut').textContent=dso+' d'; $('health_levOut').textContent=leverage.toFixed(1)+'×';
+ const weeklyBurn=Math.max(1,(rev-ebitda)/52); $('health_runway').textContent=(cash/weeklyBurn).toFixed(1)+' wks';
+ [['health_liq',liq],['health_wc',wc],['health_lev',levScore]].forEach(([k,v])=>{$(k).style.width=v+'%';$(k+'Txt').textContent=Math.round(v)});
+ let status=score>=80?['LOW PRESSURE','green']:score>=60?['MODERATE PRESSURE','amber']:['HIGH PRESSURE','red']; $('health_status').textContent=status[0];$('health_status').className='status '+status[1];
+ if(dso>=75){$('health_insightTitle').textContent='Working capital is the main pressure point';$('health_insightText').textContent=`Receivables are absorbing about ${money(wcNeed)} of additional working capital versus a 45-day baseline. Collections are the first lever to test.`}
+ else if(leverage>=3){$('health_insightTitle').textContent='Leverage is limiting headroom';$('health_insightText').textContent='Debt service capacity is becoming the main constraint. Before adding financing, test the downside case and repayment burden.'}
+ else if(cash<weeklyBurn*8){$('health_insightTitle').textContent='Liquidity headroom is thin';$('health_insightText').textContent='The current cash buffer is relatively short versus the operating burn proxy. The next priority is preserving cash flexibility.'}
+ else if(growth<0){$('health_insightTitle').textContent='The plan assumes contraction';$('health_insightText').textContent='A declining revenue plan makes cash preservation and fixed-cost flexibility more important than aggressive investment.'}
+ else {$('health_insightTitle').textContent='Financial position is workable';$('health_insightText').textContent='The position has reasonable headroom, but receivables and leverage should be monitored and decisions tested under downside assumptions.'}
+ updateScenario();
 }
 function updateScenario(){
-  const rev=+$('rev').value||0, dso=+$('dso').value||0, simDso=+$('simDso').value||0, simGrowth=+$('simGrowth').value||0;
-  const cashImpact=(rev/365)*Math.max(0,simDso-dso); $('simDsoVal').textContent=simDso+' days'; $('impactCash').textContent=money(cashImpact);
-  const diff=simDso-dso; let pts=Math.max(0,Math.min(12,Math.round(Math.abs(diff)*.35))); $('impactScore').textContent=diff===0?'0':(diff>0?'−':'＋')+pts; $('impactRisk').textContent=diff>0?'Higher':diff<0?'Lower':'Neutral';
-  $('simExplain').textContent=diff>0?`Extending customer payment time by ${diff} days increases working-capital needs and reduces liquidity headroom.`:diff<0?`Reducing customer payment time by ${Math.abs(diff)} days releases cash and strengthens liquidity headroom.`:'No change versus the current DSO.';
-  $('simGrowthVal').textContent=(simGrowth>=0?'+':'')+simGrowth+'%'; const uplift=rev*simGrowth/100; $('growthUplift').textContent=money(Math.abs(uplift));
-  $('growthImpact').textContent=simGrowth>12?'Mixed':simGrowth>0?'Positive':simGrowth<0?'Negative':'Neutral'; $('growthRisk').textContent=simGrowth>15||simGrowth<0?'Higher':'Moderate';
-  $('growthExplain').textContent=simGrowth>12?'Growth creates a meaningful revenue opportunity, but additional working capital and execution risk should be stress-tested before committing resources.':simGrowth>0?'Growth is directionally positive, but cash conversion matters: confirm margins and customer payment behaviour before scaling.':simGrowth<0?'The plan assumes contraction. Prioritise cash preservation, cost flexibility and downside resilience.':'No growth assumption changes the current decision context.';
+ const rev=+$('health_rev').value||0, dso=+$('health_dso').value||0, simDso=+$('health_simDso').value||0, simGrowth=+$('health_simGrowth').value||0, ebitda=+$('health_ebitda').value||0;
+ const cashImpact=(rev/365)*Math.max(0,simDso-dso); $('health_simDsoVal').textContent=simDso; $('health_impactCash').textContent=money(cashImpact);
+ const diff=simDso-dso; let pts=Math.round(Math.abs(diff)*.35); pts=Math.max(0,Math.min(12,pts)); $('health_impactScore').textContent=(diff===0?'0':(diff>0?'−':'＋')+pts); $('health_impactRisk').textContent=diff>0?'Higher':diff<0?'Lower':'Neutral';
+ $('health_simExplain').textContent=diff>0?`Extending customer payment time by ${diff} days increases working-capital needs and reduces liquidity headroom.`:diff<0?`Reducing customer payment time by ${Math.abs(diff)} days releases cash and strengthens liquidity headroom.`:'No change versus the current DSO.';
+ $('health_simGrowthVal').textContent=(simGrowth>=0?'+':'')+simGrowth; const uplift=rev*simGrowth/100; $('health_growthUplift').textContent=money(Math.abs(uplift));
+ let gi=simGrowth>12?'Mixed':simGrowth>0?'Positive':simGrowth<0?'Negative':'Neutral'; $('health_growthImpact').textContent=gi; $('health_growthRisk').textContent=simGrowth>15?'Higher':simGrowth<0?'Higher':'Moderate';
+ $('health_growthExplain').textContent=simGrowth>12?'Growth creates a meaningful revenue opportunity, but additional working capital and execution risk should be stress-tested before committing resources.':simGrowth>0?'Growth is directionally positive, but cash conversion matters: confirm margins and customer payment behaviour before scaling.':simGrowth<0?'The plan assumes contraction. Prioritise cash preservation, cost flexibility and downside resilience.':'No growth assumption changes the current decision context.';
 }
-$('run').onclick=calculate;
-$('sample').onclick=()=>{[['rev',3000000],['ebitda',420000],['cash',360000],['debt',800000]].forEach(([id,v])=>$(id).value=v);$('dso').value=68;$('growth').value=5;$('dsoLabel').textContent='68 days';$('growthLabel').textContent='+5%';calculate()};
-['rev','ebitda','cash','debt','dso','growth'].forEach(id=>$(id).addEventListener('input',()=>{if(id==='dso')$('dsoLabel').textContent=$('dso').value+' days';if(id==='growth')$('growthLabel').textContent=(+$('growth').value>=0?'+':'')+$('growth').value+'%';calculate()}));
-['simDso','simGrowth'].forEach(id=>$(id).addEventListener('input',updateScenario));
-
-function parseCSV(text){
-  const lines=text.replace(/\r/g,'').split('\n').filter(x=>x.trim()!=='');
-  if(!lines.length)return [];
-  const delim=(lines[0].match(/;/g)||[]).length>(lines[0].match(/,/g)||[]).length?';':',';
-  return lines.map(line=>{
-    let cells=[],cur='',quote=false;
-    for(let i=0;i<line.length;i++){const ch=line[i];if(ch=='"'){if(quote&&line[i+1]=='"'){cur+='"';i++;}else quote=!quote;}else if(ch===delim&&!quote){cells.push(cur);cur='';}else cur+=ch}
-    cells.push(cur);return cells.map(v=>v.trim());
-  });
-}
-function norm(v){return String(v??'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'')}
-const aliases={rev:['revenue','sales','turnover','ricavi','fatturato'],ebitda:['ebitda'],cash:['cash','cash_balance','cassa','liquidita'],debt:['debt','total_debt','debito'],dso:['dso','days_sales_outstanding','giorni_incasso','giorni_di_incasso'],growth:['growth','revenue_growth','growth_rate','crescita','crescita_ricavi']};
-function fieldKey(s){const n=norm(s);for(const [k,arr] of Object.entries(aliases)){if(arr.some(a=>n===norm(a)||n.includes(norm(a))))return k}return null}
-function toNumber(v){if(v==null||v==='')return null;if(typeof v==='number')return Number.isFinite(v)?v:null;let s=String(v).trim().replace(/\s/g,'').replace(/€/g,'').replace(/%/g,'');if(/^-?\d{1,3}(?:\.\d{3})+(?:,\d+)?$/.test(s))s=s.replace(/\./g,'').replace(',','.');else if(s.includes(',')&&s.includes('.'))s=s.replace(/\./g,'').replace(',','.');else if(s.includes(',')&&/,[0-9]+$/.test(s))s=s.replace(',','.');else s=s.replace(/[^0-9,.-]/g,'');const n=parseFloat(s);return Number.isFinite(n)?n:null}
-function applyMap(m){
-  let changed=[];
-  for(const k of ['rev','ebitda','cash','debt'])if(Number.isFinite(m[k])){$(k).value=Math.max(0,m[k]);changed.push(k)}
-  if(Number.isFinite(m.dso)){$('dso').value=Math.max(20,Math.min(120,m.dso));$('dsoLabel').textContent=Math.round(m.dso)+' days';changed.push('dso')}
-  if(Number.isFinite(m.growth)){$('growth').value=Math.max(-20,Math.min(30,m.growth));$('growthLabel').textContent=(m.growth>=0?'+':'')+m.growth+'%';changed.push('growth')}
-  calculate(); return changed;
-}
-function parseCSVData(text){
-  const rows=parseCSV(text), map={};
-  if(!rows.length)return map;
-  const header=rows[0].map(fieldKey);
-  if(header.some(Boolean)&&rows[1]){
-    header.forEach((k,i)=>{if(k&&!Number.isFinite(map[k])){const n=toNumber(rows[1][i]);if(Number.isFinite(n))map[k]=n}});
-  }
-  for(const row of rows){const k=fieldKey(row[0]);if(k&&!Number.isFinite(map[k])){const n=toNumber(row[1]);if(Number.isFinite(n))map[k]=n}}
-  return map;
-}
-$('fileInput').addEventListener('change',e=>{
-  const file=e.target.files?.[0]; if(!file)return;
-  const name=file.name.toLowerCase();
-  if(name.endsWith('.csv')){
-    const r=new FileReader(); r.onload=()=>{const m=parseCSVData(String(r.result||''));const changed=applyMap(m);$('fileHint').textContent=changed.length?`CSV imported successfully. Updated: ${changed.join(', ')}.`:'CSV opened, but no recognised financial fields were found.';if(changed.length){$('imported').style.display='block';$('imported').textContent='✓ LYDIQ imported '+changed.length+' financial fields from the CSV.'}else $('imported').style.display='none'};r.readAsText(file);
-  } else {
-    $('fileHint').textContent='This prototype currently reads CSV directly. XLSX import is not active in this build yet.';
-    $('imported').style.display='none';
-  }
-});
+$('health_run').onclick=calculate;$('health_sample').onclick=()=>{['health_rev','health_ebitda','health_cash','health_debt'].forEach((id,i)=>$(id).value=[3000000,420000,360000,800000][i]);$('health_dso').value=68;$('health_growth').value=5;calculate()};
+['health_rev','health_ebitda','health_cash','health_debt','health_dso','health_growth'].forEach(id=>$(id).addEventListener('input',()=>{if(id==='health_dso')$('health_dsoLabel').textContent=$('health_dso').value+' days';if(id==='health_growth')$('health_growthLabel').textContent=(+$('health_growth').value>=0?'+':'')+$('health_growth').value+'%';calculate()}));['health_simDso','health_simGrowth'].forEach(id=>$(id).addEventListener('input',updateScenario));
 calculate();
-</script>
-</body>
-</html>
+</script><script>
+(function(){
+  function norm(s){
+    return String(s ?? '').toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
+  }
+  function toNum(v){
+    if(v===null||v===undefined||String(v).trim()==='') return null;
+    if(typeof v==='number') return Number.isFinite(v)?v:null;
+    let x=String(v).trim().replace(/€/g,'').replace(/%/g,'').replace(/\s/g,'');
+    if(/^[-+]?\d{1,3}(?:\.\d{3})+(?:,\d+)?$/.test(x)) x=x.replace(/\./g,'').replace(',','.');
+    else if(x.includes(',') && x.includes('.')) x=x.replace(/\./g,'').replace(',','.');
+    else if(x.includes(',') && /,\d+$/.test(x)) x=x.replace(',','.');
+    x=x.replace(/[^0-9,.-]/g,'');
+    const n=parseFloat(x);
+    return Number.isFinite(n)?n:null;
+  }
+  const aliases={
+    revenue:['revenue','sales','turnover','ricavi','fatturato','revenues','annual_revenue'],
+    ebitda:['ebitda'], cash:['cash','cash_balance','cassa','liquidita','liquidita_corrente'],
+    debt:['debt','total_debt','debit','debito','financial_debt','net_debt'],
+    dso:['dso','days_sales_outstanding','giorni_incasso','giorni_di_incasso'],
+    growth:['growth','revenue_growth','growth_rate','crescita','crescita_ricavi']
+  };
+  function findField(label){
+    const n=norm(label);
+    for(const [key,cands] of Object.entries(aliases)){
+      if(cands.some(c=>n===norm(c)||n.includes(norm(c)))) return key;
+    }
+    return null;
+  }
+  function applyUploadData(d){
+    const changed=[];
+    const map={revenue:'health_rev',ebitda:'health_ebitda',cash:'health_cash',debt:'health_debt'};
+    for(const [key,id] of Object.entries(map)){
+      if(Number.isFinite(d[key])){ document.getElementById(id).value=Math.max(0,d[key]); changed.push(key); }
+    }
+    if(Number.isFinite(d.dso)){
+      document.getElementById('health_dso').value=Math.max(20,Math.min(120,d.dso));
+      document.getElementById('health_dsoLabel').textContent=Math.round(d.dso)+' days'; changed.push('dso');
+    }
+    if(Number.isFinite(d.growth)){
+      document.getElementById('health_growth').value=Math.max(-20,Math.min(30,d.growth));
+      document.getElementById('health_growthLabel').textContent=(d.growth>=0?'+':'')+d.growth+'%'; changed.push('growth');
+    }
+    calculate();
+    return changed;
+  }
+  function inferRows(rows){
+    const out={};
+    if(!rows.length) return out;
+    const headers=(rows[0]||[]).map(v=>String(v??''));
+    const values=rows[1]||[];
+    headers.forEach((h,i)=>{ const f=findField(h); if(f && !Number.isFinite(out[f])){ const n=toNum(values[i]); if(Number.isFinite(n)) out[f]=n; }});
+    // Also support vertical key/value tables.
+    for(const row of rows){
+      if(!row||row.length<2) continue;
+      const f=findField(row[0]);
+      if(f && !Number.isFinite(out[f])){ const n=toNum(row[1]); if(Number.isFinite(n)) out[f]=n; }
+    }
+    return out;
+  }
+  function parseCSV(text){
+    const lines=[]; let row=[]; let cell=''; let q=false;
+    for(let i=0;i<text.length;i++){
+      const c=text[i];
+      if(c==='"'){
+        if(q && text[i+1]==='"'){ cell+='"'; i++; }
+        else q=!q;
+      } else if(c===',' && !q){ row.push(cell); cell=''; }
+      else if((c==='\n'||c==='\r') && !q){ if(c==='\r' && text[i+1]==='\n') i++; row.push(cell); cell=''; if(row.some(x=>String(x).trim()!=='')) lines.push(row); row=[]; }
+      else cell+=c;
+    }
+    row.push(cell); if(row.some(x=>String(x).trim()!=='')) lines.push(row);
+    return lines;
+  }
+  async function ensureXLSX(){
+    if(window.XLSX) return true;
+    const urls=[
+      'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js',
+      'https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js'
+    ];
+    for(const src of urls){
+      try{
+        await new Promise((resolve,reject)=>{
+          const sc=document.createElement('script'); sc.src=src; sc.onload=resolve; sc.onerror=reject; document.head.appendChild(sc);
+        });
+        if(window.XLSX) return true;
+      }catch(e){}
+    }
+    return false;
+  }
+  async function handleFile(f){
+    const hint=document.getElementById('health_fileHint');
+    hint.textContent='Reading file…';
+    try{
+      const name=f.name.toLowerCase();
+      if(name.endsWith('.csv') || f.type.includes('csv')){
+        const text=await f.text();
+        const data=inferRows(parseCSV(text));
+        const changed=applyUploadData(data);
+        hint.textContent=changed.length?`Imported ${changed.length} field(s): ${changed.join(', ')}. Review the values, then run the check.`:'CSV loaded, but no recognised financial fields were found. Use Revenue, EBITDA, Cash, Debt, DSO or Growth as column names.';
+        return;
+      }
+      const ok=await ensureXLSX();
+      if(!ok) throw new Error('XLSX library could not be loaded');
+      const buf=await f.arrayBuffer();
+      const wb=XLSX.read(buf,{type:'array',cellDates:true});
+      const all=[];
+      for(const sheetName of wb.SheetNames){
+        const ws=wb.Sheets[sheetName];
+        const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:null,raw:true});
+        if(rows.length) all.push(...rows);
+      }
+      const data=inferRows(all);
+      const changed=applyUploadData(data);
+      hint.textContent=changed.length?`Imported ${changed.length} field(s): ${changed.join(', ')}. Review the values, then run the check.`:'Excel loaded, but no recognised financial fields were found. Use Revenue, EBITDA, Cash, Debt, DSO or Growth as column names.';
+    }catch(err){
+      console.error(err);
+      hint.textContent='Could not read this file. Try a simple CSV or an XLSX with financial values in the first row.';
+    }
+  }
+  const input=document.getElementById('health_fileInput');
+  if(input) input.addEventListener('change',e=>{const f=e.target.files?.[0]; if(f) handleFile(f);});
+})();
+</script></script></body></html>
