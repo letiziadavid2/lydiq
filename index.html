@@ -122,20 +122,128 @@ function updateScenario(){
 $('health_run').onclick=calculate;$('health_sample').onclick=()=>{['health_rev','health_ebitda','health_cash','health_debt'].forEach((id,i)=>$(id).value=[3000000,420000,360000,800000][i]);$('health_dso').value=68;$('health_growth').value=5;calculate()};
 ['health_rev','health_ebitda','health_cash','health_debt','health_dso','health_growth'].forEach(id=>$(id).addEventListener('input',()=>{if(id==='health_dso')$('health_dsoLabel').textContent=$('health_dso').value+' days';if(id==='health_growth')$('health_growthLabel').textContent=(+$('health_growth').value>=0?'+':'')+$('health_growth').value+'%';calculate()}));['health_simDso','health_simGrowth'].forEach(id=>$(id).addEventListener('input',updateScenario));
 calculate();
-</script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script>
-function norm(s){return String(s||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'_')}
-function toNum(v){if(v===null||v===undefined||v==='')return null;if(typeof v==='number')return v;let x=String(v).replace(/[^0-9,.-]/g,'').replace(/\.(?=\d{3}(?:\D|$))/g,'').replace(',','.');let n=parseFloat(x);return Number.isFinite(n)?n:null}
-function infer(rows){
- const map={revenue:['revenue','sales','turnover','ricavi','fatturato','revenues'],ebitda:['health_ebitda','ebitda_'],cash:['health_cash','cash_balance','cassa','liquidita','liquidità','cash_balance'],debt:['health_debt','total_debt','debit','debito','financial_debt','net_debt'],dso:['health_dso','days_sales_outstanding','giorni_incasso','giorni_di_incasso'],growth:['health_growth','revenue_growth','growth_rate','crescita','crescita_ricavi']};
- let headers=Object.keys(rows[0]||{});let hmap={};headers.forEach(h=>hmap[norm(h)]=h);
- let out={};for(const [key,cands] of Object.entries(map)){for(const c of cands){let exact=headers.find(h=>norm(h)===norm(c));if(exact){out[key]=toNum(rows[0][exact]);break;}let fuzzy=headers.find(h=>norm(h).includes(norm(c)));if(fuzzy){out[key]=toNum(rows[0][fuzzy]);break;}}}
- return out;
-}
-function applyUploadData(d){
- let changed=[];for(const id of ['revenue','health_ebitda','health_cash','health_debt']){let v=d[id];if(v!==null&&v!==undefined&&Number.isFinite(v)){document.getElementById(id==='revenue'?'health_rev':id).value=Math.max(0,v);changed.push(id)}}
- if(Number.isFinite(d.dso)){document.getElementById('health_dso').value=Math.max(20,Math.min(120,d.dso));document.getElementById('health_dsoLabel').textContent=Math.round(d.dso)+' days';changed.push('health_dso')}
- if(Number.isFinite(d.growth)){document.getElementById('health_growth').value=Math.max(-20,Math.min(30,d.growth));document.getElementById('health_growthLabel').textContent=(d.growth>=0?'+':'')+d.growth+'%';changed.push('health_growth')}
- calculate();return changed;
-}
-$('health_fileInput').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;try{const buf=await f.arrayBuffer();const wb=XLSX.read(buf,{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];const rows=XLSX.utils.sheet_to_json(ws,{defval:null});if(!rows.length)throw new Error('No data rows found');const data=infer(rows);const changed=applyUploadData(data);$('health_fileHint').textContent=changed.length?`Imported ${changed.length} field(s): ${changed.join(', ')}. Check the values before running the analysis.`:'File loaded, but no common financial columns were recognised. Try names such as Revenue, EBITDA, Cash, Debt or DSO.';}catch(err){$('health_fileHint').textContent='Could not read this file. Use a simple CSV/XLSX with financial values in the first data row.';}});
-</script></body></html>
+</script><script>
+(function(){
+  function norm(s){
+    return String(s ?? '').toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
+  }
+  function toNum(v){
+    if(v===null||v===undefined||String(v).trim()==='') return null;
+    if(typeof v==='number') return Number.isFinite(v)?v:null;
+    let x=String(v).trim().replace(/€/g,'').replace(/%/g,'').replace(/\s/g,'');
+    if(/^[-+]?\d{1,3}(?:\.\d{3})+(?:,\d+)?$/.test(x)) x=x.replace(/\./g,'').replace(',','.');
+    else if(x.includes(',') && x.includes('.')) x=x.replace(/\./g,'').replace(',','.');
+    else if(x.includes(',') && /,\d+$/.test(x)) x=x.replace(',','.');
+    x=x.replace(/[^0-9,.-]/g,'');
+    const n=parseFloat(x);
+    return Number.isFinite(n)?n:null;
+  }
+  const aliases={
+    revenue:['revenue','sales','turnover','ricavi','fatturato','revenues','annual_revenue'],
+    ebitda:['ebitda'], cash:['cash','cash_balance','cassa','liquidita','liquidita_corrente'],
+    debt:['debt','total_debt','debit','debito','financial_debt','net_debt'],
+    dso:['dso','days_sales_outstanding','giorni_incasso','giorni_di_incasso'],
+    growth:['growth','revenue_growth','growth_rate','crescita','crescita_ricavi']
+  };
+  function findField(label){
+    const n=norm(label);
+    for(const [key,cands] of Object.entries(aliases)){
+      if(cands.some(c=>n===norm(c)||n.includes(norm(c)))) return key;
+    }
+    return null;
+  }
+  function applyUploadData(d){
+    const changed=[];
+    const map={revenue:'health_rev',ebitda:'health_ebitda',cash:'health_cash',debt:'health_debt'};
+    for(const [key,id] of Object.entries(map)){
+      if(Number.isFinite(d[key])){ document.getElementById(id).value=Math.max(0,d[key]); changed.push(key); }
+    }
+    if(Number.isFinite(d.dso)){
+      document.getElementById('health_dso').value=Math.max(20,Math.min(120,d.dso));
+      document.getElementById('health_dsoLabel').textContent=Math.round(d.dso)+' days'; changed.push('dso');
+    }
+    if(Number.isFinite(d.growth)){
+      document.getElementById('health_growth').value=Math.max(-20,Math.min(30,d.growth));
+      document.getElementById('health_growthLabel').textContent=(d.growth>=0?'+':'')+d.growth+'%'; changed.push('growth');
+    }
+    calculate();
+    return changed;
+  }
+  function inferRows(rows){
+    const out={};
+    if(!rows.length) return out;
+    const headers=(rows[0]||[]).map(v=>String(v??''));
+    const values=rows[1]||[];
+    headers.forEach((h,i)=>{ const f=findField(h); if(f && !Number.isFinite(out[f])){ const n=toNum(values[i]); if(Number.isFinite(n)) out[f]=n; }});
+    // Also support vertical key/value tables.
+    for(const row of rows){
+      if(!row||row.length<2) continue;
+      const f=findField(row[0]);
+      if(f && !Number.isFinite(out[f])){ const n=toNum(row[1]); if(Number.isFinite(n)) out[f]=n; }
+    }
+    return out;
+  }
+  function parseCSV(text){
+    const lines=[]; let row=[]; let cell=''; let q=false;
+    for(let i=0;i<text.length;i++){
+      const c=text[i];
+      if(c==='"'){
+        if(q && text[i+1]==='"'){ cell+='"'; i++; }
+        else q=!q;
+      } else if(c===',' && !q){ row.push(cell); cell=''; }
+      else if((c==='\n'||c==='\r') && !q){ if(c==='\r' && text[i+1]==='\n') i++; row.push(cell); cell=''; if(row.some(x=>String(x).trim()!=='')) lines.push(row); row=[]; }
+      else cell+=c;
+    }
+    row.push(cell); if(row.some(x=>String(x).trim()!=='')) lines.push(row);
+    return lines;
+  }
+  async function ensureXLSX(){
+    if(window.XLSX) return true;
+    const urls=[
+      'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js',
+      'https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js'
+    ];
+    for(const src of urls){
+      try{
+        await new Promise((resolve,reject)=>{
+          const sc=document.createElement('script'); sc.src=src; sc.onload=resolve; sc.onerror=reject; document.head.appendChild(sc);
+        });
+        if(window.XLSX) return true;
+      }catch(e){}
+    }
+    return false;
+  }
+  async function handleFile(f){
+    const hint=document.getElementById('health_fileHint');
+    hint.textContent='Reading file…';
+    try{
+      const name=f.name.toLowerCase();
+      if(name.endsWith('.csv') || f.type.includes('csv')){
+        const text=await f.text();
+        const data=inferRows(parseCSV(text));
+        const changed=applyUploadData(data);
+        hint.textContent=changed.length?`Imported ${changed.length} field(s): ${changed.join(', ')}. Review the values, then run the check.`:'CSV loaded, but no recognised financial fields were found. Use Revenue, EBITDA, Cash, Debt, DSO or Growth as column names.';
+        return;
+      }
+      const ok=await ensureXLSX();
+      if(!ok) throw new Error('XLSX library could not be loaded');
+      const buf=await f.arrayBuffer();
+      const wb=XLSX.read(buf,{type:'array',cellDates:true});
+      const all=[];
+      for(const sheetName of wb.SheetNames){
+        const ws=wb.Sheets[sheetName];
+        const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:null,raw:true});
+        if(rows.length) all.push(...rows);
+      }
+      const data=inferRows(all);
+      const changed=applyUploadData(data);
+      hint.textContent=changed.length?`Imported ${changed.length} field(s): ${changed.join(', ')}. Review the values, then run the check.`:'Excel loaded, but no recognised financial fields were found. Use Revenue, EBITDA, Cash, Debt, DSO or Growth as column names.';
+    }catch(err){
+      console.error(err);
+      hint.textContent='Could not read this file. Try a simple CSV or an XLSX with financial values in the first row.';
+    }
+  }
+  const input=document.getElementById('health_fileInput');
+  if(input) input.addEventListener('change',e=>{const f=e.target.files?.[0]; if(f) handleFile(f);});
+})();
+</script></script></body></html>
