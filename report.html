@@ -1,1 +1,197 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LYDIQ — Financial Report</title><style>body{margin:0;background:#f4f6fb;color:#0c1020;font-family:Inter,ui-sans-serif,system-ui,sans-serif}.wrap{max-width:920px;margin:auto;padding:50px 22px}.card{background:#fff;border:1px solid #e4e8f1;border-radius:22px;padding:24px;margin-bottom:16px}.ey{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#7657ff}.hero{font-size:40px;line-height:1.04;letter-spacing:-.05em;margin:10px 0}.muted{color:#687086;line-height:1.55}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{border:1px solid #e4e8f1;border-radius:15px;padding:14px}.stat small{display:block;color:#687086}.stat strong{display:block;font-size:21px;margin-top:4px}.btn{border:0;border-radius:12px;padding:12px 14px;font-weight:900;background:#0c1020;color:#fff;cursor:pointer}.btn2{background:#fff;color:#0c1020;border:1px solid #e4e8f1;margin-left:8px}@media(max-width:680px){.grid{grid-template-columns:1fr}.btn2{margin:8px 0 0}}</style></head><body><div class="wrap"><div class="card"><div class="ey">LYDIQ · Financial Early Warning & Decision Intelligence</div><div class="hero" id="headline">Financial snapshot</div><p class="muted" id="narrative">Loading report...</p></div><div class="card"><h2>Current snapshot</h2><div class="grid"><div class="stat"><small>Revenue</small><strong id="rev">—</strong></div><div class="stat"><small>EBITDA</small><strong id="ebitda">—</strong></div><div class="stat"><small>Cash</small><strong id="cash">—</strong></div><div class="stat"><small>Debt</small><strong id="debt">—</strong></div><div class="stat"><small>DSO</small><strong id="dso">—</strong></div><div class="stat"><small>Revenue growth</small><strong id="growth">—</strong></div><div class="stat"><small>Resilience</small><strong id="score">—</strong></div><div class="stat"><small>Cash runway</small><strong id="runway">—</strong></div><div class="stat"><small>Debt / EBITDA</small><strong id="leverage">—</strong></div></div></div><div class="card"><h2 id="driver">Main driver</h2><p class="muted" id="driverText">—</p></div><div class="card"><h2>Recommended next actions</h2><p class="muted" id="actions">—</p></div><div class="card"><button class="btn" onclick="window.print()">Print / Save as PDF</button><button class="btn btn2" onclick="location.href='index.html#lydiq-report'">Back to LYDIQ</button></div><p class="muted" style="font-size:12px">Prototype output only. Not financial advice. Data is stored only in this browser session.</p></div><script>(function(){const e=id=>document.getElementById(id);const eur=n=>new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(n)||0);let d={};try{d=JSON.parse(localStorage.getItem('lydiqReport')||'{}')}catch(x){};const score=parseInt(d.score,10);e('headline').textContent=Number.isFinite(score)?(score>=80?'Financial pressure is manageable.':score>=60?'Financial pressure is building.':'Financial pressure needs attention.'):'Financial snapshot';e('narrative').textContent=d.narrative||'Run the LYDIQ health check to generate an explainable report.';e('rev').textContent=eur(d.rev);e('ebitda').textContent=eur(d.ebitda);e('cash').textContent=eur(d.cash);e('debt').textContent=eur(d.debt);e('dso').textContent=(d.dso??'—')+' days';e('growth').textContent=(d.growth>=0?'+':'')+(d.growth??'—')+'%';e('score').textContent=Number.isFinite(score)?score+'/100':'—';e('runway').textContent=d.runway||'—';e('leverage').textContent=d.leverage||'—';let driver='Liquidity headroom',text='Monitor cash conversion and customer payment behaviour.';if((d.dso||0)>=75){driver='Working capital pressure';text='Customer payment timing is absorbing more cash and should be actively managed.'}else if((Number(d.debt)||0)>0&&(Number(d.ebitda)||0)>0&&(d.debt/d.ebitda)>=3){driver='Leverage pressure';text='Debt capacity is becoming a key constraint; stress-test financing decisions.'}else if(parseFloat(d.runway)<8){driver='Liquidity headroom';text='The cash buffer is relatively short versus the operating burn proxy.'};e('driver').textContent=driver;e('driverText').textContent=text;e('actions').textContent=(d.dso||0)>=75?'Review receivables ageing · accelerate collections · stress-test cash needs':score<60?'Protect liquidity · review fixed costs · stress-test financing needs':'Review receivables ageing · monitor leverage · test the next major decision';})();</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LYDIQ — Financial Report</title>
+<meta name="description" content="LYDIQ Financial Early Warning Report">
+<style>
+:root{
+  --bg:#f4f6fb;--ink:#0c1020;--muted:#687086;--line:#e4e8f1;
+  --purple:#7657ff;--mint:#20c9a2;--amber:#ffb648;--red:#ff5d73;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1040px;margin:auto;padding:0 24px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:26px 0 18px}
+.brand{font-size:24px;font-weight:950;letter-spacing:-.05em}.brand span{color:var(--purple)}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid #ddd6ff;background:#eeeaff;color:#6e6298;border-radius:999px;text-transform:uppercase;letter-spacing:.11em;font-size:10px;font-weight:900}
+.badge i{width:7px;height:7px;border-radius:50%;background:var(--mint)}
+.card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:0 12px 35px rgba(20,25,50,.05);margin-bottom:16px}
+.hero{padding:34px 0 12px}
+h1{font-size:clamp(40px,6vw,68px);line-height:.98;letter-spacing:-.065em;margin:12px 0}
+h1 span{color:var(--purple)}
+.lead{color:var(--muted);font-size:16px;line-height:1.55;max-width:760px}
+.status{display:inline-flex;padding:8px 11px;border-radius:999px;font-size:11px;font-weight:900;margin-top:8px}
+.status.good{background:#eafbf6;color:#138a6e}.status.watch{background:#fff5df;color:#a96b00}.status.bad{background:#fff0f3;color:#d63955}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.metric{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fff}
+.metric small{display:block;color:var(--muted);font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.08em}
+.metric strong{display:block;font-size:22px;margin-top:5px;letter-spacing:-.03em}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+.section-title{font-size:22px;letter-spacing:-.03em;margin:0 0 7px}.sub{font-size:13px;color:var(--muted)}
+.scoreline{display:flex;gap:20px;align-items:center;margin-top:15px}
+.score{font-size:78px;font-weight:950;letter-spacing:-.07em;line-height:.9}.score-copy h2{margin:0 0 6px;font-size:24px}.score-copy p{margin:0;color:var(--muted);line-height:1.5;font-size:13px}
+.dark{background:#111622;color:#fff;border-radius:20px;padding:20px}.dark h3{margin:8px 0;font-size:20px}.dark p{margin:0;color:#c9cfdd;font-size:13px;line-height:1.55}
+.list{margin:12px 0 0;padding-left:18px;color:#33405a}.list li{margin:8px 0}
+.kv{display:grid;grid-template-columns:1fr auto;gap:9px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}.kv:last-child{border-bottom:0}.kv span:last-child{font-weight:900}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{border:0;border-radius:13px;padding:12px 15px;font-weight:900;cursor:pointer}.primary{background:var(--ink);color:#fff}.secondary{background:#fff;border:1px solid var(--line)}
+.note{font-size:11px;color:var(--muted);line-height:1.5}
+footer{padding:12px 0 40px;color:var(--muted);font-size:11px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.metrics{grid-template-columns:1fr}.top{align-items:flex-start;gap:15px;flex-direction:column}}
+@media print{body{background:#fff}.actions,.top .right{display:none}.wrap{max-width:none;padding:0}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">LYD<span>IQ</span></div>
+    <div class="right"><a class="btn secondary" href="index.html" style="text-decoration:none;color:inherit">Back to Health Check</a></div>
+  </header>
+
+  <section class="hero">
+    <div class="badge"><i></i> Financial Early Warning Report</div>
+    <h1 id="headline">Financial pressure is <span>manageable.</span></h1>
+    <p class="lead" id="narrative">LYDIQ has generated an indicative operating assessment from the current financial inputs. Use the report to understand the main pressure point and decide what to test next.</p>
+    <span id="status" class="status good">LOW PRESSURE</span>
+  </section>
+
+  <section class="card">
+    <div class="metrics">
+      <div class="metric"><small>Resilience</small><strong id="mScore">86 / 100</strong></div>
+      <div class="metric"><small>Cash runway</small><strong id="mRunway">7.6 wks</strong></div>
+      <div class="metric"><small>DSO</small><strong id="mDso">63 days</strong></div>
+      <div class="metric"><small>Debt / EBITDA</small><strong id="mLev">1.7×</strong></div>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <h2 class="section-title">What LYDIQ sees</h2>
+      <div class="sub">The main driver behind the current position</div>
+      <div class="scoreline">
+        <div class="score" id="bigScore">86</div>
+        <div class="score-copy">
+          <h2 id="driver">Liquidity headroom</h2>
+          <p id="driverText">Cash headroom is relatively short versus the operating burn proxy, so preserving flexibility matters.</p>
+        </div>
+      </div>
+      <div class="dark" style="margin-top:18px">
+        <div style="font-size:10px;letter-spacing:.12em;font-weight:900;color:#aeb5c6;text-transform:uppercase">Assessment</div>
+        <h3 id="assessment">Pressure is manageable, but cash conversion should stay visible.</h3>
+        <p id="assessmentText">Keep monitoring customer payment behaviour and test the downside case before taking a major financing or growth decision.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">Current snapshot</h2>
+      <div class="sub">Values used in the assessment</div>
+      <div style="margin-top:13px">
+        <div class="kv"><span>Revenue</span><span id="kRev">€3,250,000</span></div>
+        <div class="kv"><span>EBITDA</span><span id="kEbitda">€455,000</span></div>
+        <div class="kv"><span>Cash</span><span id="kCash">€410,000</span></div>
+        <div class="kv"><span>Debt</span><span id="kDebt">€780,000</span></div>
+        <div class="kv"><span>Revenue growth</span><span id="kGrowth">+5%</span></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2 class="section-title">Recommended next actions</h2>
+    <div class="sub">Practical actions suggested by the current picture</div>
+    <ul class="list" id="actions">
+      <li>Review receivables ageing and customer payment behaviour.</li>
+      <li>Test the effect of faster collections on cash headroom.</li>
+      <li>Stress-test the next financing or growth decision.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title">Decision to test</h2>
+    <div class="sub">A report is most useful when it leads to a decision.</div>
+    <div class="grid" style="margin-top:14px">
+      <div class="card" style="margin:0;background:#fbfcff">
+        <strong>Customer terms</strong>
+        <p class="sub">What happens if DSO moves from <strong id="dsoBase">63</strong> to <strong id="dsoScenario">83</strong> days?</p>
+        <div class="kv"><span>Estimated cash tied up</span><span id="cashImpact">€178,082</span></div>
+        <div class="kv"><span>Directional risk</span><span>Higher</span></div>
+      </div>
+      <div class="card" style="margin:0;background:#fbfcff">
+        <strong>Growth plan</strong>
+        <p class="sub">What happens if revenue growth is <strong id="gScenario">+15%</strong>?</p>
+        <div class="kv"><span>Revenue uplift</span><span id="growthImpact">€487,500</span></div>
+        <div class="kv"><span>Directional risk</span><span>Moderate</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="actions">
+      <button class="btn primary" id="printBtn">Print / Save as PDF</button>
+      <button class="btn secondary" id="downloadBtn">Download report</button>
+      <button class="btn secondary" id="copyBtn">Copy summary</button>
+    </div>
+    <p class="note" style="margin-top:12px">Prototype output only. Figures are indicative and are not financial advice. Data shown on this page stays in the browser.</p>
+  </section>
+
+  <footer>LYDIQ · Financial intelligence for SMEs</footer>
+</div>
+
+<script>
+function p(name,fallback){const v=new URLSearchParams(location.search).get(name);return v===null?fallback:v}
+function eur(n){return new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(n))}
+const data={
+  rev:Number(p('rev',3250000)),
+  ebitda:Number(p('ebitda',455000)),
+  cash:Number(p('cash',410000)),
+  debt:Number(p('debt',780000)),
+  dso:Number(p('dso',63)),
+  growth:Number(p('growth',5)),
+  score:Number(p('score',86)),
+  runway:p('runway','7.6 wks'),
+  scenarioDso:Number(p('scenarioDso',83)),
+  scenarioGrowth:Number(p('scenarioGrowth',15))
+};
+const leverage=data.ebitda?data.debt/data.ebitda:0;
+document.getElementById('mScore').textContent=data.score+' / 100';
+document.getElementById('bigScore').textContent=data.score;
+document.getElementById('mRunway').textContent=data.runway;
+document.getElementById('mDso').textContent=Math.round(data.dso)+' days';
+document.getElementById('mLev').textContent=leverage.toFixed(1)+'×';
+document.getElementById('kRev').textContent=eur(data.rev);
+document.getElementById('kEbitda').textContent=eur(data.ebitda);
+document.getElementById('kCash').textContent=eur(data.cash);
+document.getElementById('kDebt').textContent=eur(data.debt);
+document.getElementById('kGrowth').textContent=(data.growth>=0?'+':'')+data.growth+'%';
+document.getElementById('dsoBase').textContent=Math.round(data.dso);
+document.getElementById('dsoScenario').textContent=Math.round(data.scenarioDso);
+document.getElementById('gScenario').textContent=(data.scenarioGrowth>=0?'+':'')+data.scenarioGrowth+'%';
+const cashImpact=(data.rev/365)*Math.max(0,data.scenarioDso-data.dso);
+document.getElementById('cashImpact').textContent=eur(cashImpact);
+document.getElementById('growthImpact').textContent=eur(data.rev*data.scenarioGrowth/100);
+
+let driver='Liquidity headroom', driverText='Cash headroom is relatively short versus the operating burn proxy, so preserving flexibility matters.';
+if(data.dso>=75){driver='Working capital pressure';driverText='Customer payment timing is absorbing more cash and should be actively managed.'}
+else if(data.ebitda>0 && leverage>=3){driver='Leverage pressure';driverText='Debt capacity is becoming a key constraint; financing needs should be stress-tested.'}
+else if(parseFloat(data.runway)<8){driver='Liquidity headroom';driverText='The cash buffer is relatively short versus the operating burn proxy.'}
+document.getElementById('driver').textContent=driver;
+document.getElementById('driverText').textContent=driverText;
+
+const headline=data.score>=80?'Financial pressure is manageable.':data.score>=60?'Financial pressure is building.':'Financial pressure needs attention.';
+document.getElementById('headline').innerHTML=headline.replace(/\.$/,'<span>.</span>');
+document.getElementById('status').textContent=data.score>=80?'LOW PRESSURE':data.score>=60?'MODERATE PRESSURE':'HIGH PRESSURE';
+document.getElementById('status').className='status '+(data.score>=80?'good':data.score>=60?'watch':'bad');
+
+document.getElementById('printBtn').onclick=()=>window.print();
+document.getElementById('copyBtn').onclick=async()=>{
+  const text=`LYDIQ Financial Report\nResilience: ${data.score}/100\nCash runway: ${data.runway}\nDSO: ${data.dso} days\nDebt / EBITDA: ${leverage.toFixed(1)}x\nMain driver: ${driver}\n${driverText}`;
+  try{await navigator.clipboard.writeText(text);document.getElementById('copyBtn').textContent='Copied ✓';setTimeout(()=>document.getElementById('copyBtn').textContent='Copy summary',1200)}catch(e){alert(text)}
+};
+document.getElementById('downloadBtn').onclick=()=>{
+  const blob=new Blob(['<!doctype html>'+document.documentElement.outerHTML],{type:'text/html;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='LYDIQ_Financial_Report.html';a.click();URL.revokeObjectURL(url);
+};
+</script>
+</body>
+</html>
